@@ -64,62 +64,6 @@ def create_post_slug(post_title, owner, post=None):
     return slug
 
 
-def syntax_highlight(text):
-    """Highlights markdown codeblocks within a markdown text."""
-
-    processed_text = ""
-    within_code_block = False
-    lexer = None
-    code_block = ""
-    for line in text.split("\n"):
-        # code block backticks found, either begin or end
-        if line[:3] == "```":
-            if not within_code_block:
-                # then this is the beginning of a block
-                lang = line[3:].strip()
-
-                if lang:
-                    # then this is a *code* block
-                    within_code_block = True
-                    lang_filename = "file." + lang
-                    try:
-                        lexer = get_lexer_for_filename(lang_filename)
-                    except ClassNotFound:
-                        try:
-                            lexer = get_lexer_by_name(lang)
-                        except ClassNotFound:
-                            # can't find lexer, just use C lang as default
-                            lexer = get_lexer_by_name("c")
-
-                    # continue because we don't want to add backticks in the processed text
-                    continue
-                else:
-                    # no lang, so just a generic block (non-code)
-                    lexer = None
-
-            else:
-                # then this is the end of a code block
-                # actual highlighting happens here
-                within_code_block = False
-                highlighted_block = pygments.highlight(
-                    code_block,
-                    lexer,
-                    HtmlFormatter(style="solarized-light", noclasses=True, cssclass=""),
-                )
-                processed_text += highlighted_block
-                code_block = ""  # reset code_block variable
-
-                # continue because we don't want to add backticks in the processed text
-                continue
-
-        if within_code_block:
-            code_block += line + "\n"
-        else:
-            processed_text += line + "\n"
-
-    return processed_text
-
-
 def clean_html(dirty_html, strip_tags=False):
     """Clean potentially evil HTML.
 
@@ -142,12 +86,13 @@ def md_to_html(markdown_string, strip_tags=False):
     if not markdown_string:
         return ""
     dirty_html = markdown.markdown(
-        syntax_highlight(markdown_string),
+        text=markdown_string,
         extensions=[
             "markdown.extensions.fenced_code",
             "markdown.extensions.tables",
             "markdown.extensions.footnotes",
             "markdown.extensions.toc",
+            "markdown.extensions.codehilite",
         ],
     )
     return clean_html(dirty_html, strip_tags)

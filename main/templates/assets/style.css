@@ -84,6 +84,12 @@ button,
     --green-color: #26bd60;
     --red-color: #ff0000;
     --purple-color: #cd1ecd;
+
+    --bg: white;
+    --secondary-bg: #eee;
+    --primary: #007bff;
+    --text-color: #444;
+    --code-literal: #484;
 }
 
 @media (max-width: 34rem) {
@@ -106,6 +112,12 @@ button,
         --light-grey-color: #353535;
         --airy-grey-color: #2b2b2b;
         --purple-color: #dd47ec;
+
+        --bg: #121415;
+        --secondary-bg: #2d2d2d;
+        --primary: #78bef8;
+        --text-color: #444;
+        --code-literal: #f79;
     }
 }
 
@@ -840,4 +852,73 @@ svg .analytics-chart-text {
 .adminextra-content-cards-col4 {
     width: 30vw;
     padding: 0 4px;
+}
+
+
+/* SYNTAX HIGHLIGHT */
+code {
+    font-size: 1rem;
+    background: var(--secondary-bg);
+    padding: 0 0.3rem;
+}
+
+pre code {
+    font-size: inherit;
+    padding: 0;
+    background: none;
+}
+
+pre {
+    padding: 10px;
+    overflow-x: auto;
+    background-color: var(--secondary-bg);
+}
+
+@media (prefers-color-scheme: dark) {
+    pre {
+        border: solid 1px var(--text-color);
+    }
+}
+
+pre .c, pre .c1, pre .cm {
+    color: #707070;
+    font-style: italic;
+}
+
+@media (prefers-color-scheme: dark) {
+    pre .c, pre .c1, pre .cm {
+        color: #999;
+    }
+}
+
+pre .k, pre .kd, pre .kn, pre .kr, pre .nt, pre .nb {
+    color: #008;
+}
+
+@media (prefers-color-scheme: dark) {
+    pre .k, pre .kd, pre .kn, pre .kr, pre .nt, pre .nb {
+        color: #69f;
+    }
+}
+
+pre .cp {
+    color: #222;
+    font-weight: bold;
+}
+
+pre .kt {
+    color: #44f;
+}
+
+pre .s, pre .s2, pre .sd, pre .s1 {
+    color: var(--code-literal);
+    font-style: italic;
+}
+
+pre .no {
+    color: var(--code-literal);
+}
+
+pre .mi, pre .kc {
+    color: var(--code-literal);
 }
