@@ -4,6 +4,10 @@
         <ul>
             <a href="/">« {{ blog_user.blog_title }}</a> |
             <a href="{% url 'rss_feed' %}">RSS</a>
+            {% if blog_user.notifications_on %}
+            | <a href="{% url 'notification_subscribe' %}">Newsletter</a>
+            {% endif %}
+
             {% for page in pages %}
                 {% if forloop.first %}
                     |
