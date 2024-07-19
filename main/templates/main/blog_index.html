@@ -55,7 +55,7 @@
         <li>
           <span>
               <time datetime="{{ p.published_at|date:'Y-m-d' }}" itemprop="datePublished">
-                    {{ p.published_at|date:'j F Y' }}
+                    {{ p.published_at|date:'d M Y' }}
               </time>
               {% if not p.is_published %}
                 — SCHEDULED
