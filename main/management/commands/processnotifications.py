@@ -15,7 +15,7 @@ def get_mail_connection():
     # SMPT EmailBackend instantiated with the broadcast-specific email host
     return mail.get_connection(
         "django.core.mail.backends.smtp.EmailBackend",
-        host=settings.EMAIL_HOST_BROADCASTS,
+        host=settings.EMAIL_HOST,
     )
 
 

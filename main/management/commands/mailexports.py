@@ -15,7 +15,7 @@ def get_mail_connection():
     """Returns the default EmailBackend but instantiated with a custom host."""
     return mail.get_connection(
         "django.core.mail.backends.smtp.EmailBackend",
-        host=settings.EMAIL_HOST_BROADCASTS,
+        host=settings.EMAIL_HOST,
     )
 
 

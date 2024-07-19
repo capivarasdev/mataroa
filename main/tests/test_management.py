@@ -44,7 +44,7 @@ class ProcessNotificationsTest(TestCase):
 
     def test_mail_backend(self):
         connection = processnotifications.get_mail_connection()
-        self.assertEqual(connection.host, settings.EMAIL_HOST_BROADCASTS)
+        self.assertEqual(connection.host, settings.EMAIL_HOST)
 
     def test_command(self):
         output = StringIO()
@@ -137,7 +137,7 @@ class MailExportsTest(TestCase):
 
     def test_mail_backend(self):
         connection = mailexports.get_mail_connection()
-        self.assertEqual(connection.host, settings.EMAIL_HOST_BROADCASTS)
+        self.assertEqual(connection.host, settings.EMAIL_HOST)
 
     def test_command(self):
         output = StringIO()

@@ -8,7 +8,7 @@ from django.core.management.base import BaseCommand
 def get_mail_connection():
     return mail.get_connection(
         "django.core.mail.backends.smtp.EmailBackend",
-        host=settings.EMAIL_HOST_BROADCASTS,
+        host=settings.EMAIL_HOST,
     )
 
 
