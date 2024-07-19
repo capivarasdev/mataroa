@@ -16,7 +16,7 @@
     <div class="pages-item-byline">
         Last updated on <time datetime="{{ page.updated_at|date:'Y-m-d' }}">{{ page.updated_at|date:'F j, Y' }}</time>
         | <a href="{% url 'page_update' page.slug %}">Edit page</a>
-        | <a href="{% url 'page_delete' page.slug %}">Del</a>
+        | <a href="{% url 'page_delete' page.slug %}">Delete</a>
     </div>
     {% endif %}
 

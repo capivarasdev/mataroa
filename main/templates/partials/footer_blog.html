@@ -1,7 +1,24 @@
+<hr>
 <footer>
-    {{ blog_user.subscribe_note_as_html|safe }}
+    <nav>
+        <ul>
+            <a href="/">« {{ blog_user.blog_title }}</a> |
+            <a href="{% url 'rss_feed' %}">RSS</a>
+            {% for page in pages %}
+                {% if forloop.first %}
+                    |
+                {% endif %}
+                <a href="{% url 'page_detail' page.slug %}">{{ page.title }}</a>
+                {% if not forloop.last %}
+                    |
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </nav>
 
-    {% if blog_user.footer_note %}
-    {{ blog_user.footer_note_as_html|safe }}
-    {% endif %}
+    <p>
+        {% if blog_user.footer_note %}
+            {{ blog_user.footer_note_as_html|safe }}
+        {% endif %}
+    </p>
 </footer>

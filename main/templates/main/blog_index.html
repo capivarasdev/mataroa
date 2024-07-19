@@ -22,13 +22,14 @@
 
 <main class="blog" itemscope itemtype="http://schema.org/Blog">
     {% if blog_user.blog_title %}
-    <h1 itemprop="name">{{ blog_user.blog_title }}</h1>
+    <h2 itemprop="name">{{ blog_user.blog_title }}</h2>
     {% endif %}
 
     {% if blog_user.blog_byline %}
     <div class="byline" itemprop="about">
         {{ blog_user.blog_byline_as_html|safe }}
     </div>
+    <hr>
     {% endif %}
 
     {% if request.user.is_authenticated and request.subdomain == request.user.username and drafts %}
@@ -46,24 +47,25 @@
     </div>
     {% endif %}
 
-    <ul class="posts">
+    <section>
+        <ul class="page-list">
         {% for p in posts %}
         {% if p.published_at %}
         <li>
-            <a href="{% url 'post_detail' p.slug %}">{{ p.title }}</a>
-            <small>
-                —
-                <time datetime="{{ p.published_at|date:'Y-m-d' }}" itemprop="datePublished">
-                    {{ p.published_at|date:'F j, Y' }}
-                </time>
-                {% if not p.is_published %}
+          <span>
+              <time datetime="{{ p.published_at|date:'Y-m-d' }}" itemprop="datePublished">
+                    {{ p.published_at|date:'j F Y' }}
+              </time>
+              {% if not p.is_published %}
                 — SCHEDULED
-                {% endif %}
-            </small>
+              {% endif %}
+          </span>
+          <a href="{% url 'post_detail' p.slug %}">{{ p.title }}</a>
         </li>
         {% endif %}
         {% endfor %}
-    </ul>
+        </ul>
+    </section>
 </main>
 
 {% include 'partials/webring.html' %}
