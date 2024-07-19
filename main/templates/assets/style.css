@@ -331,11 +331,6 @@ button,
 /*    overflow-x: auto;*/
 /*}*/
 
-/*code {*/
-/*    background: var(--airy-grey-color);*/
-/*    padding: 2px;*/
-/*}*/
-
 /*hr {*/
 /*    border-top: 1px solid var(--light-grey-color);*/
 /*    border-bottom: none;*/
@@ -697,23 +692,25 @@ input[type="submit"]:disabled {
 /*    max-width: 100%;*/
 /*}*/
 
-/*.pages-generic-grid {*/
-/*    display: grid;*/
-/*    grid-template-columns: 1fr 1fr 1fr;*/
-/*    column-gap: 16px;*/
-/*    row-gap: 16px;*/
-/*    margin-top: 16px;*/
-/*}*/
-/*@media (max-width: 490px) {*/
-/*  .pages-generic-grid {*/
-/*    grid-template-columns: 1fr 1fr;*/
-/*  }*/
-/*}*/
-/*@media (max-width: 340px) {*/
-/*  .pages-generic-grid {*/
-/*    grid-template-columns: 1fr;*/
-/*  }*/
-/*}*/
+.pages-generic-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 16px;
+    row-gap: 16px;
+    margin-top: 16px;
+}
+
+@media (max-width: 490px) {
+  .pages-generic-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 340px) {
+  .pages-generic-grid {
+    grid-template-columns: 1fr;
+  }
+}
 
 /*!* dashboard *!*/
 /*.dashboard-cta {*/
@@ -764,23 +761,23 @@ input[type="submit"]:disabled {
 /*}*/
 
 /*!* analytics *!*/
-/*.analytics-chart {*/
-/*    background: var(--light-grey-color);*/
-/*    line-height: 0;*/
-/*}*/
+.analytics-chart {
+    background: var(--light-grey-color);
+    line-height: 0;
+}
 
-/*svg .analytics-chart-bar {*/
-/*    fill: var(--link-color);*/
-/*}*/
+svg .analytics-chart-bar {
+    fill: var(--link-color);
+}
 
-/*svg .analytics-chart-bar:hover {*/
-/*    fill: var(--ascent-color);*/
-/*}*/
+svg .analytics-chart-bar:hover {
+    fill: var(--ascent-color);
+}
 
-/*svg .analytics-chart-text {*/
-/*    font-family: monospace;*/
-/*    font-size: 10px;*/
-/*}*/
+svg .analytics-chart-text {
+    font-family: monospace;
+    font-size: 10px;
+}
 
 /*!* billing stripe *!*/
 /*#subscription-form input[type="submit"] {*/
@@ -920,75 +917,6 @@ input[type="submit"]:disabled {
 /*.adminextra-content-cards-col4 {*/
 /*    width: 30vw;*/
 /*    padding: 0 4px;*/
-/*}*/
-
-
-/*!* SYNTAX HIGHLIGHT *!*/
-/*code {*/
-/*    font-size: 1rem;*/
-/*    background: var(--secondary-bg);*/
-/*    padding: 0 0.3rem;*/
-/*}*/
-
-/*pre code {*/
-/*    font-size: inherit;*/
-/*    padding: 0;*/
-/*    background: none;*/
-/*}*/
-
-/*pre {*/
-/*    padding: 10px;*/
-/*    overflow-x: auto;*/
-/*    background-color: var(--secondary-bg);*/
-/*}*/
-
-/*@media (prefers-color-scheme: dark) {*/
-/*    pre {*/
-/*        border: solid 1px var(--text-color);*/
-/*    }*/
-/*}*/
-
-/*pre .c, pre .c1, pre .cm {*/
-/*    color: #707070;*/
-/*    font-style: italic;*/
-/*}*/
-
-/*@media (prefers-color-scheme: dark) {*/
-/*    pre .c, pre .c1, pre .cm {*/
-/*        color: #999;*/
-/*    }*/
-/*}*/
-
-/*pre .k, pre .kd, pre .kn, pre .kr, pre .nt, pre .nb {*/
-/*    color: #008;*/
-/*}*/
-
-/*@media (prefers-color-scheme: dark) {*/
-/*    pre .k, pre .kd, pre .kn, pre .kr, pre .nt, pre .nb {*/
-/*        color: #69f;*/
-/*    }*/
-/*}*/
-
-/*pre .cp {*/
-/*    color: #222;*/
-/*    font-weight: bold;*/
-/*}*/
-
-/*pre .kt {*/
-/*    color: #44f;*/
-/*}*/
-
-/*pre .s, pre .s2, pre .sd, pre .s1 {*/
-/*    color: var(--code-literal);*/
-/*    font-style: italic;*/
-/*}*/
-
-/*pre .no {*/
-/*    color: var(--code-literal);*/
-/*}*/
-
-/*pre .mi, pre .kc {*/
-/*    color: var(--code-literal);*/
 /*}*/
 
 body {
