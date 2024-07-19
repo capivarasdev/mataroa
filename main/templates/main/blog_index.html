@@ -30,6 +30,7 @@
         {{ blog_user.blog_byline_as_html|safe }}
     </div>
     <hr>
+    <h2>Posts</h2>
     {% endif %}
 
     {% if request.user.is_authenticated and request.subdomain == request.user.username and drafts %}
