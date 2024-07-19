@@ -178,8 +178,6 @@ class UserUpdate(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         "blog_byline",
         "subscribe_note",
         "footer_note",
-        "theme_zialucia",
-        "theme_sansserif",
         "custom_domain",
         "comments_on",
         "notifications_on",

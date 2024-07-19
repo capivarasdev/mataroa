@@ -55,16 +55,6 @@ class User(AbstractUser):
         default="Powered by [mataroa.blog](https://mataroa.blog/).",
         help_text="Supports markdown",
     )
-    theme_zialucia = models.BooleanField(
-        default=False,
-        verbose_name="Theme Zia Lucia",
-        help_text="Enable/disable Zia Lucia theme with larger default font size.",
-    )
-    theme_sansserif = models.BooleanField(
-        default=False,
-        verbose_name="Theme Sans-serif",
-        help_text="Use sans-serif font in blog content.",
-    )
 
     redirect_domain = models.CharField(
         max_length=150,

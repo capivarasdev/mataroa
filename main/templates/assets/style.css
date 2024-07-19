@@ -102,9 +102,6 @@ button,
 
 /*!* general *!*/
 /*:root {*/
-/*    {% if request.theme_zialucia %}*/
-/*    font-size: 20px;*/
-/*    {% endif %}*/
 /*    font-family: sans-serif;*/
 /*    line-height: 1.5;*/
 
@@ -608,20 +605,6 @@ input[type="submit"]:disabled {
 /*    margin-bottom: 8px;*/
 /*}*/
 
-/*.posts-item-body p {*/
-/*    {% if not request.theme_sansserif %}*/
-/*    font-family: serif;*/
-/*    font-size: 1.1rem;*/
-/*    {% endif %}*/
-/*}*/
-
-/*.posts-item-body li {*/
-/*    {% if not request.theme_sansserif %}*/
-/*    font-family: serif;*/
-/*    font-size: 1.1rem;*/
-/*    {% endif %}*/
-/*}*/
-
 /*.posts-item-body img {*/
 /*    max-width: 100%;*/
 /*    display: block;*/
@@ -672,20 +655,6 @@ input[type="submit"]:disabled {
 /*.pages-item-byline {*/
 /*    color: var(--dark-grey-color);*/
 /*    margin-bottom: 8px;*/
-/*}*/
-
-/*.pages-item-body p {*/
-/*    {% if not request.theme_sansserif %}*/
-/*    font-family: serif;*/
-/*    font-size: 1.1rem;*/
-/*    {% endif %}*/
-/*}*/
-
-/*.pages-item-body li {*/
-/*    {% if not request.theme_sansserif %}*/
-/*    font-family: serif;*/
-/*    font-size: 1.1rem;*/
-/*    {% endif %}*/
 /*}*/
 
 /*.pages-item-body img {*/

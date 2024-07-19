@@ -19,13 +19,6 @@ def host_middleware(get_response):
         canonical_parts = settings.CANONICAL_HOST.split(".")
 
         if host == settings.CANONICAL_HOST:
-            # this case is for mataroa.blog landing and dashboard pages
-            # * don't set request.subdomain
-            # * set theme if logged in
-            # * return immediately
-            if request.user.is_authenticated:
-                request.theme_zialucia = request.user.theme_zialucia
-                request.theme_sansserif = request.user.theme_sansserif
             return get_response(request)
         elif (
             len(host_parts) == 3
@@ -41,10 +34,6 @@ def host_middleware(get_response):
             # check if subdomain exists
             if models.User.objects.filter(username=request.subdomain).exists():
                 request.blog_user = models.User.objects.get(username=request.subdomain)
-
-                # set theme
-                request.theme_zialucia = request.blog_user.theme_zialucia
-                request.theme_sansserif = request.blog_user.theme_sansserif
 
                 # redirect to custom and/or retired urls for cases:
                 # * logged out / anon users
@@ -78,8 +67,6 @@ def host_middleware(get_response):
             # custom domain case
             request.blog_user = models.User.objects.get(custom_domain=host)
             request.subdomain = request.blog_user.username
-            request.theme_zialucia = request.blog_user.theme_zialucia
-            request.theme_sansserif = request.blog_user.theme_sansserif
 
             # if user has retired their mataroa blog (and keeps the custom domain)
             # redirect to new domain

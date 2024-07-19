@@ -50,7 +50,6 @@ class UserAdmin(DjUserAdmin):
                     "blog_title",
                     "blog_byline",
                     "footer_note",
-                    "theme_zialucia",
                     "redirect_domain",
                     "custom_domain",
                     "comments_on",
