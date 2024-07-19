@@ -424,6 +424,23 @@ input[type="submit"]:disabled {
     background: var(--ascent-color);
 }
 
+@media (prefers-color-scheme: dark) {
+    input[type="submit"] {
+        background: var(--ascent-color);
+        border: 1px solid var(--link-color);
+    }
+
+    input[type="submit"]:hover,
+    input[type="submit"]:active {
+        background: var(--link-color);
+    }
+
+    input[type="submit"]:disabled {
+        pointer-events: none;
+        background: var(--link-color);
+    }
+}
+
 /*form .helptext {*/
 /*    color: var(--dark-grey-color);*/
 /*}*/
@@ -691,43 +708,43 @@ input[type="submit"]:disabled {
 /*    line-height: 1.6;*/
 /*}*/
 
-/*!* images *!*/
-/*.images-grid {*/
-/*    max-width: 100%;*/
-/*    margin-top: 32px;*/
-/*    display: grid;*/
-/*    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));*/
-/*    grid-template-rows: 302px;*/
-/*}*/
+/* images */
+.images-grid {
+    max-width: 100%;
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-rows: 302px;
+}
 
-/*.images-grid-item {*/
-/*    display: flex;*/
-/*    justify-content: center;*/
-/*    border: 1px solid var(--light-grey-color);*/
-/*}*/
+.images-grid-item {
+    display: flex;
+    justify-content: center;
+    border: 1px solid var(--light-grey-color);
+}
 
-/*.images-grid-item img {*/
-/*    max-width: 300px;*/
-/*    max-height: 300px;*/
-/*    object-fit: contain;*/
-/*}*/
+.images-grid-item img {
+    max-width: 300px;
+    max-height: 300px;
+    object-fit: contain;
+}
 
-/*!* image detail *!*/
-/*.images-item {*/
-/*    max-width: 100%;*/
-/*    margin-top: 32px;*/
-/*    margin-bottom: 32px;*/
-/*    text-align: center;*/
-/*}*/
+/* image detail */
+.images-item {
+    max-width: 100%;
+    margin-top: 32px;
+    margin-bottom: 32px;
+    text-align: center;
+}
 
-/*.images-item img {*/
-/*    max-width: 100%;*/
-/*    max-height: 100vh;*/
-/*}*/
+.images-item img {
+    max-width: 100%;
+    max-height: 100vh;
+}
 
-/*.images-item-byline {*/
-/*    color: var(--dark-grey-color);*/
-/*}*/
+.images-item-byline {
+    color: var(--dark-grey-color);
+}
 
 /*!* analytics *!*/
 .analytics-chart {
