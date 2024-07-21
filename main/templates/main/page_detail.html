@@ -32,16 +32,4 @@
 {% endblock %}
 
 {% block scripts %}
-{% if not blog_user.comments_on %}
-<script>
-    window.addEventListener('keypress', function (evt) {
-        if (evt.key === 'u') {
-            document.location.assign('/pages');
-        } else if (evt.key === 'e') {
-            let url = document.location.pathname + 'edit';
-            document.location.assign(url);
-        }
-    });
-</script>
-{% endif %}
 {% endblock %}

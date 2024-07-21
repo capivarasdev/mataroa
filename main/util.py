@@ -93,7 +93,7 @@ def md_to_html(markdown_string, strip_tags=False):
             "markdown.extensions.footnotes",
             "markdown.extensions.toc",
             "markdown.extensions.codehilite",
-            "def_list"
+            "def_list",
         ],
     )
     return clean_html(dirty_html, strip_tags)

@@ -52,9 +52,6 @@ def dashboard(request):
         "main/dashboard.html",
         {
             "billing_enabled": bool(settings.STRIPE_API_KEY),
-            "comments_pending_count": models.Comment.objects.filter(
-                post__owner=request.user, is_approved=False
-            ).count(),
         },
     )
 
@@ -179,7 +176,6 @@ class UserUpdate(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         "subscribe_note",
         "footer_note",
         "custom_domain",
-        "comments_on",
         "notifications_on",
         "mail_export_on",
         "redirect_domain",
@@ -254,13 +250,6 @@ class PostDetail(DetailView):
             context["pages"] = models.Page.objects.filter(
                 owner__username=self.request.subdomain, is_hidden=False
             )
-            context["comments"] = models.Comment.objects.filter(
-                post=self.object, is_approved=True
-            )
-            context["comments_pending"] = models.Comment.objects.filter(
-                post=self.object, is_approved=False
-            )
-
         # do not record analytic if post is authed user's
         if (
             self.request.user.is_authenticated
@@ -433,171 +422,6 @@ class SnapshotDetail(LoginRequiredMixin, DetailView):
         self.object = self.get_object()
         if request.user != self.object.owner:
             raise PermissionDenied()
-        return super().dispatch(request, *args, **kwargs)
-
-
-class CommentPending(LoginRequiredMixin, ListView):
-    model = models.Comment
-
-    def get_queryset(self):
-        return (
-            models.Comment.objects.filter(
-                is_approved=False,
-                post__owner=self.request.user,
-            )
-            .order_by("id")
-            .select_related("post", "post__owner")
-        )
-
-
-class CommentCreateAuthor(LoginRequiredMixin, SuccessMessageMixin, CreateView):
-    model = models.Comment
-    fields = ["body"]
-    success_message = "your comment is public"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["post"] = models.Post.objects.get(
-            owner__username=self.request.subdomain, slug=self.kwargs["slug"]
-        )
-        return context
-
-    def get_success_url(self):
-        return reverse("post_detail", args=(self.object.post.slug,))
-
-    def form_valid(self, form):
-        # save comment as approved since it's by the author
-        self.object = form.save(commit=False)
-        self.object.is_approved = True
-        self.object.is_author = True
-        self.object.name = self.request.user.username
-        self.object.post = models.Post.objects.get(
-            owner__username=self.request.subdomain, slug=self.kwargs["slug"]
-        )
-        self.object.save()
-        return super().form_valid(form)
-
-    def dispatch(self, request, *args, **kwargs):
-        if hasattr(request, "subdomain") and request.method == "POST":
-            return super().dispatch(request, *args, **kwargs)
-        else:
-            return redirect("//" + settings.CANONICAL_HOST)
-
-
-class CommentCreate(SuccessMessageMixin, CreateView):
-    model = models.Comment
-    fields = ["name", "email", "body"]
-    success_message = "thanks! your comment will be published soon unless it's spam :)"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["post"] = models.Post.objects.get(
-            owner__username=self.request.subdomain, slug=self.kwargs["slug"]
-        )
-        return context
-
-    def get_success_url(self):
-        return reverse("post_detail", args=(self.object.post.slug,))
-
-    def form_valid(self, form):
-        # prevent comment creation on comments_on=False blogs
-        if not models.User.objects.get(username=self.request.subdomain).comments_on:
-            form.add_error(None, "No comments allowed on this blog.")
-            return self.render_to_response(self.get_context_data(form=form))
-
-        # save comment as not approved
-        self.object = form.save(commit=False)
-        self.object.is_approved = False
-        self.object.post = models.Post.objects.get(
-            owner__username=self.request.subdomain, slug=self.kwargs["slug"]
-        )
-        self.object.save()
-
-        # inform blog_user
-        comment_url = util.get_protocol() + self.object.get_absolute_url()
-        approve_url = (
-            f"{util.get_protocol()}//{self.object.post.owner.username}.{settings.CANONICAL_HOST}"
-            + reverse("comment_approve", args=(self.object.post.slug, self.object.id))
-        )
-        delete_url = (
-            f"{util.get_protocol()}//{self.object.post.owner.username}.{settings.CANONICAL_HOST}"
-            + reverse("comment_delete", args=(self.object.post.slug, self.object.id))
-        )
-        body = f"Someone commented on your post: {self.object.post.title}\n"
-        body += "\nThis comment is pending review, currenly visible only to you.\n"
-        body += "\nComment follows:\n"
-        body += "\n" + self.object.body + "\n"
-        body += f"\n---\nSee comment:\n{comment_url}\n"
-        body += f"\nApprove:\n{approve_url}\n"
-        body += f"\nDelete:\n{delete_url}\n"
-        mail.send_mail(
-            subject=f"New comment on {self.object.post.title}",
-            message=body,
-            from_email=settings.NOTIFICATIONS_FROM_EMAIL,
-            recipient_list=[self.object.post.owner.email],
-        )
-
-        return super().form_valid(form)
-
-    def dispatch(self, request, *args, **kwargs):
-        if hasattr(request, "subdomain") and request.method == "POST":
-            return super().dispatch(request, *args, **kwargs)
-        else:
-            return redirect("//" + settings.CANONICAL_HOST)
-
-
-class CommentDelete(LoginRequiredMixin, DeleteView):
-    model = models.Comment
-    success_message = "comment deleted"
-
-    def get_success_url(self):
-        if (
-            models.Comment.objects.filter(
-                post__owner=self.request.user, is_approved=False
-            ).count()
-            > 0
-        ):
-            return reverse("comment_pending")
-        else:
-            return reverse("post_detail", args=(self.kwargs["slug"],))
-
-    def form_valid(self, form):
-        self.object = self.get_object()
-        self.object.delete()
-        messages.success(self.request, self.success_message % self.object.__dict__)
-        return HttpResponseRedirect(self.get_success_url())
-
-    def dispatch(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        if request.user != self.object.post.owner:
-            raise PermissionDenied()
-        return super().dispatch(request, *args, **kwargs)
-
-
-class CommentApprove(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
-    model = models.Comment
-    fields = ["is_approved"]
-    template_name = "main/comment_approve.html"
-    success_message = "comment approved"
-
-    def get_success_url(self):
-        if (
-            models.Comment.objects.filter(
-                post__owner=self.request.user, is_approved=False
-            ).count()
-            > 0
-        ):
-            return reverse("comment_pending")
-        else:
-            return reverse("post_detail", args=(self.object.post.slug,))
-
-    def dispatch(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        if request.user != self.object.post.owner:
-            raise PermissionDenied()
-        if self.object.is_approved:
-            messages.info(self.request, "comment already approved")
-            return redirect("post_detail", self.object.post.slug)
         return super().dispatch(request, *args, **kwargs)
 
 
@@ -1257,13 +1081,6 @@ def guides_markdown(request):
 
 def guides_images(request):
     return render(request, "main/guides_images.html")
-
-
-def guides_comments(request):
-    return render(
-        request,
-        "main/guides_comments.html",
-    )
 
 
 def guides_customdomain(request):

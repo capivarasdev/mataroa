@@ -4,18 +4,17 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('main', '0103_alter_post_broadcasted_at'),
+        ("main", "0103_alter_post_broadcasted_at"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='user',
-            name='theme_sansserif',
+            model_name="user",
+            name="theme_sansserif",
         ),
         migrations.RemoveField(
-            model_name='user',
-            name='theme_zialucia',
+            model_name="user",
+            name="theme_zialucia",
         ),
     ]

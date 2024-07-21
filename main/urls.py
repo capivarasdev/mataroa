@@ -18,7 +18,6 @@ urlpatterns = [
     path(
         "guides/custom-domain/", general.guides_customdomain, name="guides_customdomain"
     ),
-    path("guides/comments/", general.guides_comments, name="guides_comments"),
     path("guides/comparisons/", general.comparisons, name="comparisons"),
 ]
 
@@ -105,31 +104,6 @@ urlpatterns += [
         "notifications/subscribers",
         general.NotificationList.as_view(),
         name="notification_list",
-    ),
-]
-
-# comments
-urlpatterns += [
-    path("comments/pending/", general.CommentPending.as_view(), name="comment_pending"),
-    path(
-        "blog/<slug:slug>/comments/create/author/",
-        general.CommentCreateAuthor.as_view(),
-        name="comment_create_author",
-    ),
-    path(
-        "blog/<slug:slug>/comments/create/",
-        general.CommentCreate.as_view(),
-        name="comment_create",
-    ),
-    path(
-        "blog/<slug:slug>/comments/<int:pk>/delete/",
-        general.CommentDelete.as_view(),
-        name="comment_delete",
-    ),
-    path(
-        "blog/<slug:slug>/comments/<int:pk>/approve/",
-        general.CommentApprove.as_view(),
-        name="comment_approve",
     ),
 ]
 

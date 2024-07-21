@@ -246,22 +246,6 @@ class UserDeleteTestCase(TestCase):
         self.assertFalse(models.User.objects.filter(id=self.user.id).exists())
 
 
-class UserUpdateCommentsOnTestCase(TestCase):
-    def setUp(self):
-        self.user = models.User.objects.create(username="alice")
-        self.client.force_login(self.user)
-
-    def test_user_comments_on(self):
-        data = {
-            "username": "alice",
-            "comments_on": True,
-        }
-        response = self.client.post(reverse("user_update"), data)
-        self.assertEqual(response.status_code, 302)
-        updated_user = models.User.objects.get(id=self.user.id)
-        self.assertEqual(updated_user.comments_on, data["comments_on"])
-
-
 class UserDomainCheckTestCase(TestCase):
     def setUp(self):
         self.user = models.User.objects.create(

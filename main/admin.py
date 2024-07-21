@@ -28,7 +28,7 @@ class UserAdmin(DjUserAdmin):
         "last_login",
     )
     list_display_links = ("id", "username")
-    list_filter = ("is_premium", "mail_export_on", "comments_on")
+    list_filter = ("is_premium", "mail_export_on")
     search_fields = ("username", "email", "stripe_customer_id", "blog_title")
     actions = [make_approved]
 
@@ -52,7 +52,6 @@ class UserAdmin(DjUserAdmin):
                     "footer_note",
                     "redirect_domain",
                     "custom_domain",
-                    "comments_on",
                     "notifications_on",
                     "mail_export_on",
                     "post_backups_on",
@@ -142,19 +141,6 @@ class AnalyticPostAdmin(admin.ModelAdmin):
     )
     ordering = ["-id"]
 
-
-@admin.register(models.Comment)
-class CommentAdmin(admin.ModelAdmin):
-    list_display = (
-        "id",
-        "post",
-        "is_approved",
-        "name",
-        "email",
-        "body",
-        "created_at",
-    )
-    ordering = ["-id"]
 
 
 @admin.register(models.Notification)

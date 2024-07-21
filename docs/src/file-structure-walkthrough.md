@@ -55,7 +55,6 @@ Condensed and commented sources file tree:
 │   ├── tests/
 │   │   ├── test_billing.py
 │   │   ├── test_blog.py
-│   │   ├── test_comments.py
 │   │   ├── test_images.py
 │   │   ├── test_management.py
 │   │   ├── test_pages.py
@@ -88,7 +87,6 @@ All urls are in this module. They are visually divided into several sections:
 * user system, includes signup, settings, logout
 * blog posts, the CRUD opertions of
 * blog extras, includes rss and newsletter features
-* comments, related to the blog post comments
 * billing, subscription and card related
 * blog import, export, webring
 * images CRUD

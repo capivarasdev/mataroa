@@ -71,11 +71,6 @@ class User(AbstractUser):
         validators=[validators.validate_domain_name],
     )
 
-    comments_on = models.BooleanField(
-        default=False,
-        help_text="Enable/disable comments for your blog.",
-        verbose_name="Comments",
-    )
     notifications_on = models.BooleanField(
         default=True,
         help_text="Allow/disallow people subscribing for email newsletter for new posts.",
@@ -331,32 +326,6 @@ class AnalyticPost(models.Model):
 
     class Meta:
         ordering = ["-created_at"]
-
-    def __str__(self):
-        return self.created_at.strftime("%c") + ": " + self.post.title
-
-
-class Comment(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
-    body = models.TextField()
-    name = models.CharField(max_length=150, default="Anonymous", null=True, blank=True)
-    email = models.EmailField(null=True, blank=True)
-    is_approved = models.BooleanField(default=False)
-    is_author = models.BooleanField(
-        default=False, help_text="True if logged in author has posted comment."
-    )
-
-    class Meta:
-        ordering = ["created_at"]
-
-    @property
-    def body_as_html(self):
-        return util.md_to_html(self.body)
-
-    def get_absolute_url(self):
-        path = reverse("post_detail", kwargs={"slug": self.post.slug})
-        return f"//{self.post.owner.username}.{settings.CANONICAL_HOST}{path}#comment-{self.id}"
 
     def __str__(self):
         return self.created_at.strftime("%c") + ": " + self.post.title

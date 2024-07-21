@@ -629,26 +629,6 @@ input[type="submit"]:disabled {
 /*    margin-right: auto;*/
 /*}*/
 
-/*!* comments *!*/
-/*.comments {*/
-/*    margin-top: 64px;*/
-/*}*/
-
-/*.comments-title {*/
-/*    font-size: 1.2rem;*/
-/*    margin-top: 32px;*/
-/*    padding-bottom: 4px;*/
-/*    border-bottom: 2px solid var(--light-grey-color);*/
-/*}*/
-
-/*.comments-body {*/
-/*    margin-bottom: 16px;*/
-/*}*/
-
-/*.comments-body p {*/
-/*    margin-top: 4px;*/
-/*}*/
-
 /*!* page detail *!*/
 /*.pages-item-brand {*/
 /*    display: block;*/
