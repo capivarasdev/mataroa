@@ -486,42 +486,6 @@ input[type="submit"]:disabled {
 /*    font-size: 20px;*/
 /*}*/
 
-/*!* comparisons *!*/
-/*.comparisons {*/
-/*    max-width: 1000px;*/
-/*}*/
-
-/*.comparisons h1,*/
-/*.comparisons p,*/
-/*.comparisons ol,*/
-/*.comparisons ul {*/
-/*    max-width: 34rem;*/
-/*    margin-left: auto;*/
-/*    margin-right: auto;*/
-/*}*/
-
-/*.comparisons-matrix {*/
-/*    overflow: auto;*/
-/*}*/
-
-/*.comparisons table {*/
-/*    min-width: 800px;*/
-/*    white-space: nowrap;*/
-/*}*/
-
-/*.comparisons thead > tr > th:not(:first-child),*/
-/*.comparisons tbody > tr > td:not(:first-child) {*/
-/*    text-align: center;*/
-/*}*/
-
-/*.comparisons th {*/
-/*    text-align: left;*/
-/*}*/
-
-/*.comparisons tr {*/
-/*    min-width: 300px;*/
-/*}*/
-
 /*!* blog index *!*/
 /*.blog a:hover {*/
 /*    text-decoration: underline;*/

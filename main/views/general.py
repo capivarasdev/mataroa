@@ -957,10 +957,6 @@ class NotificationRecordList(LoginRequiredMixin, ListView):
         return context
 
 
-def comparisons(request):
-    return render(request, "main/comparisons.html")
-
-
 def privacy_redir(request):
     return redirect("operandi", permanent=True)
 

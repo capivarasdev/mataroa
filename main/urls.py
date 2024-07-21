@@ -18,7 +18,6 @@ urlpatterns = [
     path(
         "guides/custom-domain/", general.guides_customdomain, name="guides_customdomain"
     ),
-    path("guides/comparisons/", general.comparisons, name="comparisons"),
 ]
 
 # user system

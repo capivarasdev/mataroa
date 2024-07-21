@@ -16,10 +16,6 @@ class StaticTestCase(TestCase):
         response = self.client.get(reverse("guides_images"))
         self.assertEqual(response.status_code, 200)
 
-    def test_comparisons(self):
-        response = self.client.get(reverse("comparisons"))
-        self.assertEqual(response.status_code, 200)
-
     def test_export(self):
         """Test export index page as an anon user."""
         response = self.client.get(reverse("export_index"))
