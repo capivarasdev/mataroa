@@ -4,17 +4,16 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('main', '0104_remove_user_theme_sansserif_and_more'),
+        ("main", "0104_remove_user_theme_sansserif_and_more"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='user',
-            name='comments_on',
+            model_name="user",
+            name="comments_on",
         ),
         migrations.DeleteModel(
-            name='Comment',
+            name="Comment",
         ),
     ]

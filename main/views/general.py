@@ -12,7 +12,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LogoutView as DjLogoutView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.sitemaps.views import sitemap as DjSitemapView
-from django.core import mail
 from django.core.exceptions import PermissionDenied
 from django.db.models import Count
 from django.db.models.functions import TruncDay
@@ -100,8 +99,8 @@ def index(request):
         "main/landing.html",
         {
             "instance_name": settings.INSTANCE_NAME,
-            "instance_description": settings.INSTANCE_DESCRIPTION
-        }
+            "instance_description": settings.INSTANCE_DESCRIPTION,
+        },
     )
 
 

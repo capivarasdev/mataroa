@@ -4,7 +4,7 @@ from django.contrib.syndication.views import Feed
 from django.http import Http404
 from django.utils import timezone
 
-from main import models, util
+from main import models
 
 
 class RSSBlogFeed(Feed):

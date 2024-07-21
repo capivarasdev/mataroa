@@ -5,12 +5,9 @@ import zipfile
 
 import bleach
 import markdown
-import pygments
 from bleach.css_sanitizer import CSSSanitizer
 from django.conf import settings
 from django.utils.text import slugify
-from pygments.formatters import HtmlFormatter
-from pygments.lexers import ClassNotFound, get_lexer_by_name, get_lexer_for_filename
 
 from main import denylist, models
 

@@ -142,7 +142,6 @@ class AnalyticPostAdmin(admin.ModelAdmin):
     ordering = ["-id"]
 
 
-
 @admin.register(models.Notification)
 class NotificationAdmin(admin.ModelAdmin):
     list_display = (
