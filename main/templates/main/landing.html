@@ -1,12 +1,15 @@
 {% extends 'main/layout.html' %}
 
-{% block title %}capivaras.dev{% endblock %}
+{% block title %}{{ instance_name }}{% endblock %}
 
 {% block content %}
 <main>
-    <h1>capivaras.dev</h1>
+    <h1>{{ instance_name }}</h1>
+    <p>{{ instance_description }}</p>
+
     <p>
-        Why self-improve if we can collectively degrade?
+        Are you concerned about our business model?
+        Check the <a href="{% url 'transparency' %}">transparency page</a> and see for yourself how bad it is!
     </p>
 </main>
 
