@@ -13,7 +13,7 @@ from django.contrib.auth.views import LogoutView as DjLogoutView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.sitemaps.views import sitemap as DjSitemapView
 from django.core.exceptions import PermissionDenied
-from django.db.models import Count
+from django.db.models import Count, F, Max, Window
 from django.db.models.functions import TruncDay
 from django.http import (
     Http404,
@@ -94,12 +94,24 @@ def index(request):
     if request.user.is_authenticated:
         return redirect("blog_index")
 
+    last_posts = (
+        models.Post.objects.filter(
+            published_at__isnull=False,
+            published_at__lte=timezone.now().date(),
+        )
+        .annotate(
+            my_max=Window(expression=Max("published_at"), partition_by=F("owner"))
+        )
+        .filter(my_max=F("published_at"))
+    )
+
     return render(
         request,
         "main/landing.html",
         {
             "instance_name": settings.INSTANCE_NAME,
             "instance_description": settings.INSTANCE_DESCRIPTION,
+            "posts": last_posts,
         },
     )
 

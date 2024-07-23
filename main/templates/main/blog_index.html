@@ -22,16 +22,17 @@
 
 <main class="blog" itemscope itemtype="http://schema.org/Blog">
     {% if blog_user.blog_title %}
-    <h2 itemprop="name">{{ blog_user.blog_title }}</h2>
+    <h1 itemprop="name">{{ blog_user.blog_title }}</h1>
     {% endif %}
 
     {% if blog_user.blog_byline %}
     <div class="byline" itemprop="about">
         {{ blog_user.blog_byline_as_html|safe }}
     </div>
+    {% endif %}
+
     <hr>
     <h2>Posts</h2>
-    {% endif %}
 
     {% if request.user.is_authenticated and request.subdomain == request.user.username and drafts %}
     <div class="drafts">
@@ -53,15 +54,12 @@
         {% for p in posts %}
         {% if p.published_at %}
         <li>
-          <span>
-              <time datetime="{{ p.published_at|date:'Y-m-d' }}" itemprop="datePublished">
-                    {{ p.published_at|date:'d M Y' }}
-              </time>
+          <a href="{% url 'post_detail' p.slug %}">{{ p.title }}</a>
+            <small>— <time datetime="{{ p.published_at|date:'Y-m-d' }}" itemprop="datePublished">{{ p.published_at|date:'d M Y' }}</time>
               {% if not p.is_published %}
                 — SCHEDULED
               {% endif %}
-          </span>
-          <a href="{% url 'post_detail' p.slug %}">{{ p.title }}</a>
+            </small>
         </li>
         {% endif %}
         {% endfor %}

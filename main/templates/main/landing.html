@@ -7,6 +7,26 @@
     <h1>{{ instance_name }}</h1>
     <p>{{ instance_description }}</p>
 
+    <hr>
+    <h2>Latest Posts</h2>
+
+    <section>
+        <ul class="page-list">
+        {% for p in posts %}
+        {% if p.published_at %}
+        <li>
+          <a href="{{ p.get_proper_url }}">{{ p.title }}</a> by <a href="{{ p.owner.blog_url }}">{{ p.owner.blog_title }}</a>
+            <small>— <time datetime="{{ p.published_at|date:'Y-m-d' }}" itemprop="datePublished">{{ p.published_at|date:'d M Y' }}</time>
+              {% if not p.is_published %}
+                — SCHEDULED
+              {% endif %}
+            </small>
+        </li>
+        {% endif %}
+        {% endfor %}
+        </ul>
+    </section>
+
     <p>
         Are you concerned about our business model?
         Check the <a href="{% url 'transparency' %}">transparency page</a> and see for yourself how bad it is!
