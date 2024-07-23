@@ -13,7 +13,6 @@
         <li><a href="#export-markdown">Markdown</a>: all blog posts as .md files, zip archived</li>
         <li><a href="#export-book">Book</a>: all blog posts as chapters in an .epub book</li>
         <li><a href="#export-print">Print</a>: renders all blog posts in one page</li>
-        <li><a href="#export-zola">Zola</a>: reliable and simple static site generator</li>
         <li><a href="#export-hugo">Hugo</a>: reliable and very popular static site generators</li>
     </ul>
 
@@ -60,43 +59,6 @@
 
     {% if request.user.is_authenticated %}
     <a href="{% url 'export_print' %}" class="btn">Generate all posts in one page</a>
-    {% endif %}
-
-    <h2 id="export-zola">Zola</h2>
-    <p>
-        <a href="https://www.getzola.org/">Zola</a>
-        is a
-        <a href="https://davidwalsh.name/introduction-static-site-generators">static site generator</a>
-        which focuses in simplicity and lack of verbosity.
-    </p>
-    <p>
-        To install Zola
-        <a href="https://www.getzola.org/documentation/getting-started/installation/">see here</a>.
-        To use after downloading the zip archive:
-    </p>
-    <ol>
-        <li><code>cd</code> into the directory</li>
-        <li>run <code>zola serve</code></li>
-        <li>go to <code>http://127.0.0.1:1111</code> in your browser</li>
-    </ol>
-    <p>Ready!</p>
-
-    <p>
-        You can also host it for free on a number of platforms. There are how-to guides on
-        <a href="https://www.getzola.org/">getzola.org</a> for
-        <a href="https://www.getzola.org/documentation/deployment/netlify/">Netlify</a>,
-        <a href="https://www.getzola.org/documentation/deployment/github-pages/">GitHub Pages</a>,
-        <a href="https://www.getzola.org/documentation/deployment/gitlab-pages/">GitLab Pages</a>,
-        <a href="https://www.getzola.org/documentation/deployment/vercel/">Vercel</a>,
-        <a href="https://www.getzola.org/documentation/deployment/cloudflare-pages/">Cloudflare Pages</a>,
-        and one can also use <a href="https://srht.site/">sourcehut pages</a>.
-    </p>
-
-    {% if request.user.is_authenticated %}
-    <form method="post" action="{% url 'export_zola' %}">
-        {% csrf_token %}
-        <input type="submit" value="Export as Zola sources">
-    </form>
     {% endif %}
 
     <h2 id="export-hugo">Hugo</h2>

@@ -25,7 +25,6 @@ Condensed and commented sources file tree:
 ├── docs/
 ├── export_base_epub/ # base sources for epub export functionality
 ├── export_base_hugo/ # base sources for hugo export functionality
-├── export_base_zola/ # base sources for zola export functionality
 ├── main/
 │   ├── admin.py
 │   ├── apps.py
@@ -136,12 +135,13 @@ api key based authentication.
 
 This module contains all views related to the export capabilities of mataroa.
 
-The way the exports work is by reading the base files from the repository root:
-[export_base_hugo](export_base_hugo/), [export_base_zola](export_base_zola/),
-[export_base_epub](export_base_epub/) for Hugo, Zola, and epub respectively.
-After reading, we replace some strings on the configurations, generate posts
-as markdown strings, and zip-archive everything in-memory. Finally, we respond
-using the appropriate content type (`application/zip` or `application/epub`) and
+The way the exports work is by reading the base files from the
+repository root: [export_base_hugo](export_base_hugo/),
+[export_base_epub](export_base_epub/) for Hugo and epub
+respectively. After reading, we replace some strings on the
+configurations, generate posts as markdown strings, and zip-archive
+everything in-memory. Finally, we respond using the appropriate
+content type (`application/zip` or `application/epub`) and
 [Content-Disposition](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Disposition)
 `attachment`.
 

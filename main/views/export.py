@@ -13,17 +13,6 @@ from django.views.decorators.http import require_POST
 from main import models, util
 
 
-def prepend_zola_frontmatter(body, post_title, pub_date):
-    frontmatter = "+++\n"
-    frontmatter += f'title = "{post_title}"\n'
-    frontmatter += f"date = {pub_date}\n"
-    frontmatter += 'template = "post.html"\n'
-    frontmatter += "+++\n"
-    frontmatter += "\n"
-
-    return frontmatter + body
-
-
 def prepend_hugo_frontmatter(body, post_title, pub_date, post_slug):
     frontmatter = "+++\n"
     frontmatter += f'title = "{post_title}"\n'
@@ -63,62 +52,6 @@ def export_markdown(request):
             for file_name, data in export_posts:
                 export_archive.writestr(
                     export_name + f"/{container_dir}/" + file_name, data.getvalue()
-                )
-
-        response = HttpResponse(zip_buffer.getvalue(), content_type="application/zip")
-        response["Content-Disposition"] = f"attachment; filename={export_name}.zip"
-        return response
-
-
-@login_required
-def export_zola(request):
-    if request.method == "POST":
-        # load zola templates
-        with open("./export_base_zola/config.toml") as zola_config_file:
-            zola_config = (
-                zola_config_file.read()
-                .replace("example.com", f"{request.user.username}.mataroa.blog")
-                .replace("Example blog title", f"{request.user.username} blog")
-                .replace(
-                    "Example blog description", f"{request.user.blog_byline or ''}"
-                )
-            )
-        with open("./export_base_zola/style.css") as zola_styles_file:
-            zola_styles = zola_styles_file.read()
-        with open("./export_base_zola/index.html") as zola_index_file:
-            zola_index = zola_index_file.read()
-        with open("./export_base_zola/post.html") as zola_post_file:
-            zola_post = zola_post_file.read()
-        with open("./export_base_zola/_index.md") as zola_content_index_file:
-            zola_content_index = zola_content_index_file.read()
-
-        # get all user posts and add them into export_posts encoded
-        posts = models.Post.objects.filter(owner=request.user)
-        export_posts = []
-        for p in posts:
-            pub_date = p.published_at or p.created_at.date()
-            title = p.slug + ".md"
-            body = prepend_zola_frontmatter(
-                p.body, util.escape_quotes(p.title), pub_date
-            )
-            export_posts.append((title, io.BytesIO(body.encode())))
-
-        # create zip archive in memory
-        export_name = "export-zola-" + str(uuid.uuid4())[:8]
-        zip_buffer = io.BytesIO()
-        with zipfile.ZipFile(
-            zip_buffer, "a", zipfile.ZIP_DEFLATED, False
-        ) as export_archive:
-            export_archive.writestr(export_name + "/config.toml", zola_config)
-            export_archive.writestr(export_name + "/static/style.css", zola_styles)
-            export_archive.writestr(export_name + "/templates/index.html", zola_index)
-            export_archive.writestr(export_name + "/templates/post.html", zola_post)
-            export_archive.writestr(
-                export_name + "/content/_index.md", zola_content_index
-            )
-            for file_name, data in export_posts:
-                export_archive.writestr(
-                    export_name + "/content/" + file_name, data.getvalue()
                 )
 
         response = HttpResponse(zip_buffer.getvalue(), content_type="application/zip")
