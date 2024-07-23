@@ -2,32 +2,26 @@
 <main>
     <h1>{{ .Site.Title }}</h1>
 
-    {{- if .Site.Params.Description }}
+    {{ if .Site.Params.Description }}
     <p class="byline">
         {{ .Site.Params.Description }}
     </p>
-    {{- end }}
-
-    <ul class="posts">
-        {{ range .Pages }}
-        <li>
-            <a href="{{ .Permalink }}">{{ .Title }}</a>
-            <small>
-                — <time datetime="{{ dateFormat "January 2, 2006" .Date }}" itemprop="datePublished">
-                    {{ dateFormat "January 2, 2006" .Date }}
-                </time>
-            </small>
-        </li>
-        {{ end }}
-    </ul>
-</main>
-
-<footer>
-    {{ with .OutputFormats.Get "rss" -}}
-        <p>
-            Subscribe via
-            {{ printf `<a href=%q title=%q>RSS</a>` .Permalink site.Title | safeHTML }}
-        </p>
     {{ end }}
-</footer>
+
+    <hr>
+    <h2>Posts</h2>
+
+    <section>
+        <ul class="page-list">
+            {{ range (where .Site.RegularPages "Type" "blog") }}
+            <li>
+              <a href="{{ .Permalink }}">{{ .Title }}</a>
+              <small>
+                — <<time datetime="{{ dateFormat "January 2, 2006" .Date }}" itemprop="datePublished">{{ dateFormat "January 2, 2006" .Date }}</time>
+              </small>
+            </li>
+            {{ end }}
+        </ul>
+    </section>
+</main>
 {{ end }}

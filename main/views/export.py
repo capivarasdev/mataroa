@@ -17,7 +17,7 @@ def prepend_hugo_frontmatter(body, post_title, pub_date, post_slug):
     frontmatter = "+++\n"
     frontmatter += f'title = "{post_title}"\n'
     frontmatter += f"date = {pub_date}\n"
-    frontmatter += f'url = "blog/{post_slug}"\n'
+    frontmatter += f'slug = "{post_slug}"\n'
     frontmatter += "+++\n"
     frontmatter += "\n"
 
@@ -70,11 +70,13 @@ def export_hugo(request):
                 hugo_config_file.read()
                 .replace("example.com", f"{request.user.username}.mataroa.blog")
                 .replace("Example blog title", blog_title)
-                .replace("Example blog description", blog_byline)
+                .replace(
+                    "Example blog description", "\\n".join(blog_byline.splitlines())
+                )
             )
         with open("./export_base_hugo/theme.toml") as hugo_theme_file:
             hugo_theme = hugo_theme_file.read()
-        with open("./export_base_hugo/style.css") as hugo_styles_file:
+        with open("./main/templates/assets/style.css") as hugo_styles_file:
             hugo_styles = hugo_styles_file.read()
         with open("./export_base_hugo/single.html") as hugo_single_file:
             hugo_single = hugo_single_file.read()
@@ -125,7 +127,7 @@ def export_hugo(request):
             )
             for file_name, data in export_posts:
                 export_archive.writestr(
-                    export_name + "/content/" + file_name, data.getvalue()
+                    export_name + "/content/blog/" + file_name, data.getvalue()
                 )
 
         response = HttpResponse(zip_buffer.getvalue(), content_type="application/zip")

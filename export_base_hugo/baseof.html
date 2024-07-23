@@ -4,13 +4,13 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        {{- if eq .Section "blog" }}
+        {{ if eq .Section "blog" }}
         <title>{{ .Title }} - {{ .Site.Title }}</title>
         <meta name="description" content="{{ .Summary }}">
-        {{- else }}
+        {{ else }}
         <title>{{ .Site.Title }}</title>
         <meta name="description" content="{{ .Site.Params.Description }}">
-        {{- end }}
+        {{ end }}
 
         <link href="{{ .Site.BaseURL }}style.css" rel="stylesheet">
         {{ with .OutputFormats.Get "rss" -}}
@@ -19,7 +19,19 @@
     </head>
 
     <body>
-        {{- block "main" . }}
-        {{- end }}
+        <main>
+        {{ block "main" . }}
+        {{ end }}
+        </main>
+
+        <hr>
+        <footer>
+            <nav>
+                <ul>
+                    <a href="/">« {{ .Site.Title }}</a> |
+                    <a href="{{.Site.BaseURL}}rss.xml">RSS</a>
+                </ul>
+            </nav>
+        </footer>
     </body>
 </html>

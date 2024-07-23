@@ -1,32 +1,19 @@
+{{ define "title" }}
+    {{ .Title }}
+{{ end }}
+
 {{ define "main" }}
-<main>
-    <a href="/" class="posts-item-brand">{{ .Site.Title }}</a>
-
-    <article itemscope itemtype="http://schema.org/BlogPosting">
-        <h1 class="posts-item-title" itemprop="name headline">
-            {{ .Title }}
-        </h1>
-
-        <div class="posts-item-byline">
-            Published on
-            <time datetime="{{ dateFormat "January 2, 2006" .Date }}" itemprop="datePublished">
-                {{ dateFormat "January 2, 2006" .Date }}
-            </time>
-        </div>
-
-        <div itemprop="articleBody">
-            {{ .Content }}
-        </div>
-    </article>
-</main>
-<footer>
-    {{- with .Site.GetPage "/" }}
-        {{- with .OutputFormats.Get "rss" }}
-            <p>
-                Subscribe via
-                {{ printf `<a href=%q title=%q>RSS</a>` .Permalink site.Title | safeHTML }}
-            </p>
-        {{- end }}
-    {{- end }}
-</footer>
+<article>
+    <header>
+        <h1>{{ .Title }}</h1>
+        <p>
+            {{ if .Date }}
+                <time datetime="{{ .Date.Format "2006-01-02" }}" pubdate>{{ .Date.Format "02 Jan 2006" }}</time>
+            {{ else if .Description }}
+                {{ .Description }}
+            {{ end }}
+        </p>
+    </header>
+    {{ .Content }}
+</article>
 {{ end }}

@@ -10,3 +10,10 @@ theme = "mataroa"
   [outputFormats.RSS]
     mediatype = "application/rss"
     baseName = "rss"
+
+[markup.goldmark.renderer]
+unsafe = true
+
+[markup.highlight]
+noClasses = false
+guessSyntax = true

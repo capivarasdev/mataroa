@@ -939,13 +939,13 @@ a:hover {
 }
 
 .page-list li {
-    display: flex;
+    /*display: flex;*/
     margin-bottom: calc(var(--component-padding) / 2);
 }
 
-.page-list li span {
-    flex: 0 0 140px;
-}
+/*.page-list li span {*/
+/*    flex: 0 0 140px;*/
+/*}*/
 
 code {
     font-size: 1rem;
