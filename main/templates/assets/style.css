@@ -253,9 +253,9 @@ button,
 /*    }*/
 /*}*/
 
-/*.alert-error {*/
-/*    color: var(--red-color);*/
-/*}*/
+.alert-error {
+    color: var(--red-color);
+}
 
 /*section {*/
 /*    max-width: 34rem;*/
@@ -361,14 +361,14 @@ button,
 /*    color: var(--green-color) !important;*/
 /*}*/
 
-/*.type-delete {*/
-/*    color: var(--red-color) !important;*/
-/*}*/
+.type-delete {
+    color: var(--red-color) !important;
+}
 
-/*.type-danger {*/
-/*    background: var(--red-color) !important;*/
-/*    border-color: var(--red-color) !important;*/
-/*}*/
+.type-danger {
+    background: var(--red-color) !important;
+    border-color: var(--red-color) !important;
+}
 
 /*!* form *!*/
 /*label {*/
@@ -445,9 +445,9 @@ input[type="submit"]:disabled {
 /*    color: var(--dark-grey-color);*/
 /*}*/
 
-/*.form-error {*/
-/*    color: var(--red-color);*/
-/*}*/
+.form-error {
+    color: var(--red-color);
+}
 
 /*.form-inline {*/
 /*    display: inline-block;*/
