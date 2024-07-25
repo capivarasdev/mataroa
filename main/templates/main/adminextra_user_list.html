@@ -25,9 +25,6 @@ button {
                 {{ user.id }}
             </a>
         </div>
-        <div class="adminextra-content-row-id2" style="padding-top: 8px;">
-            {{ user.stripe_customer_id|default:"" }}
-        </div>
         <div class="adminextra-content-row-username">
             <span>{{ user.class_status }}</span>
             {% if user.is_approved %}

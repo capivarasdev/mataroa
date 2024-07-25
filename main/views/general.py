@@ -3,7 +3,6 @@ import uuid
 from collections import defaultdict
 from datetime import datetime, timedelta
 
-import stripe
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
@@ -29,7 +28,6 @@ from django.views.generic.edit import CreateView, DeleteView, FormView, UpdateVi
 
 from main import denylist, forms, models, util
 from main.sitemaps import PageSitemap, PostSitemap, StaticSitemap
-from main.views import billing
 
 logger = logging.getLogger(__name__)
 
@@ -49,9 +47,6 @@ def dashboard(request):
     return render(
         request,
         "main/dashboard.html",
-        {
-            "billing_enabled": bool(settings.STRIPE_API_KEY),
-        },
     )
 
 
@@ -212,16 +207,6 @@ class UserDelete(LoginRequiredMixin, DeleteView):
 
     def form_valid(self, form):
         success_url = self.get_success_url()
-        if self.request.user.is_premium:
-            stripe.api_key = settings.STRIPE_API_KEY
-            subscription = billing._get_stripe_subscription(
-                self.request.user.stripe_subscription_id
-            )
-            try:
-                stripe.Subscription.delete(subscription["id"])
-            except stripe.error.StripeError as ex:
-                logger.error(str(ex))
-                return HttpResponse("Subscription could not be canceled.", status=503)
         self.object.delete()
         return HttpResponseRedirect(success_url)
 

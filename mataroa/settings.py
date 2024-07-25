@@ -205,14 +205,6 @@ if not DEBUG and not LOCALDEV:
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 
-# Stripe
-# https://stripe.com/docs/api
-
-STRIPE_API_KEY = os.getenv("STRIPE_API_KEY", "")
-STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY", "")
-STRIPE_PRICE_ID = os.getenv("STRIPE_PRICE_ID", "")
-
-
 # Translate
 
 TRANSLATE_API_URL = os.getenv(

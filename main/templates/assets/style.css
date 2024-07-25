@@ -710,21 +710,6 @@ svg .analytics-chart-text {
     font-size: 10px;
 }
 
-/*!* billing stripe *!*/
-/*#subscription-form input[type="submit"] {*/
-/*    margin-top: 8px;*/
-/*}*/
-
-/*#card-element {*/
-/*    border: 1px solid var(--light-grey-color);*/
-/*    padding: 4px 8px;*/
-/*}*/
-
-/*#card-element-errors {*/
-/*    margin-top: 8px;*/
-/*    color: var(--red-color);*/
-/*}*/
-
 /*!* adminextra *!*/
 /*.adminextra-content {*/
 /*    max-width: 100%;*/

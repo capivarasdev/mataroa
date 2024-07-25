@@ -21,7 +21,6 @@ Current list of top-level PyPI dependencies (source at [requirements.in](/requir
 * [Markdown](https://pypi.org/project/Markdown/)
 * [Pygments](https://pypi.org/project/Pygments/)
 * [bleach](https://pypi.org/project/bleach/)
-* [stripe](https://pypi.org/project/stripe/)
 
 ## Adding a new dependency
 

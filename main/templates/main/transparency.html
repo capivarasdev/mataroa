@@ -86,20 +86,6 @@
             <div>{{ active_nonnew_users }}</div>
         </article>
     </section>
-
-    <hr>
-    <section>
-        <strong>Subscription Revenue</strong>
-        <ul>
-            <li>Monthly revenue ${{ monthly_revenue|floatformat:2 }}/mo</li>
-            <li>
-                Revenue used to
-                <a href="https://climate.stripe.com/QPSBFx">fund CO<sub>2</sub> removal</a>
-                ${{ revenue_co2|floatformat:2 }}/mo
-            </li>
-        </ul>
-    </section>
-
 </main>
 
 {% include 'partials/footer.html' %}

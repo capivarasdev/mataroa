@@ -38,9 +38,6 @@ img {
                 </a>
             </p>
             <p>
-                {{ user.stripe_customer_id|default:"" }}
-            </p>
-            <p>
                 <span>{{ user.class_status }}</span>
                 {% if user.is_approved %}
                 <span title="approved">✅</span>

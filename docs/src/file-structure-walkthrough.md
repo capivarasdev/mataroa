@@ -52,7 +52,6 @@ Condensed and commented sources file tree:
 │   │   │   └── webring.html
 │   │   └── registration/
 │   ├── tests/
-│   │   ├── test_billing.py
 │   │   ├── test_blog.py
 │   │   ├── test_images.py
 │   │   ├── test_management.py
@@ -65,7 +64,6 @@ Condensed and commented sources file tree:
 │   ├── validators.py # custom form and field validators
 │   ├── views.py
 │   ├── views_api.py
-│   ├── views_billing.py
 │   └── views_export.py
 ├── manage.py
 ├── mataroa
@@ -86,7 +84,6 @@ All urls are in this module. They are visually divided into several sections:
 * user system, includes signup, settings, logout
 * blog posts, the CRUD opertions of
 * blog extras, includes rss and newsletter features
-* billing, subscription and card related
 * blog import, export, webring
 * images CRUD
 * analytics list and details
@@ -144,11 +141,6 @@ everything in-memory. Finally, we respond using the appropriate
 content type (`application/zip` or `application/epub`) and
 [Content-Disposition](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Disposition)
 `attachment`.
-
-## [`main/views_billing.py`](/main/views_billing.py)
-
-This module contains all billing and subscription related views. It’s designed to
-support one payment processor, Stripe.
 
 ## [`main/tests/`](/main/tests/)
 

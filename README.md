@@ -295,24 +295,6 @@ They are triggered using the standard `manage.py` Django way; eg:
 python manage.py processnotifications
 ```
 
-## Billing
-
-One can deploy mataroa without setting up billing functionalities. This is
-the default case. To handle payments and subscriptions this project uses
-[Stripe](https://stripe.com/). To enable Stripe and payments, one needs to have
-a Stripe account with a single
-[Product](https://stripe.com/docs/billing/prices-guide) (eg. "Mataroa Premium
-Plan").
-
-To configure, add the following variables from your Stripe account to your
-`.envrc`:
-
-```sh
-export STRIPE_API_KEY="sk_test_XXX"
-export STRIPE_PUBLIC_KEY="pk_test_XXX"
-export STRIPE_PRICE_ID="price_XXX"
-```
-
 ## License
 
 Copyright Mataroa Contributors

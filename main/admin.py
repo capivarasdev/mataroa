@@ -18,7 +18,6 @@ class UserAdmin(DjUserAdmin):
         "username",
         "blog_url",
         "email",
-        "stripe_customer_id",
         "is_premium",
         "mail_export_on",
         "post_count",
@@ -29,7 +28,7 @@ class UserAdmin(DjUserAdmin):
     )
     list_display_links = ("id", "username")
     list_filter = ("is_premium", "mail_export_on")
-    search_fields = ("username", "email", "stripe_customer_id", "blog_title")
+    search_fields = ("username", "email", "blog_title")
     actions = [make_approved]
 
     @admin.display
@@ -59,8 +58,6 @@ class UserAdmin(DjUserAdmin):
                     "webring_name",
                     "webring_prev_url",
                     "webring_next_url",
-                    "stripe_customer_id",
-                    "stripe_subscription_id",
                     "is_premium",
                     "is_grandfathered",
                     "is_approved",

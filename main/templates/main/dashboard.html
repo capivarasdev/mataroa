@@ -29,10 +29,6 @@
         <a href="{% url 'webring' %}">Webring</a>
         <br><a href="{% url 'api_docs' %}">API</a>
 
-        {% if billing_enabled %}
-        <br><a href="{% url 'billing_index' %}">Billing</a>
-        {% endif %}
-
         <br><a href="{% url 'blog_import' %}">Import posts</a>
         <br><a href="{% url 'export_index' %}">Export blog</a>
     </div>
