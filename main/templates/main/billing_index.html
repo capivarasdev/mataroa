@@ -13,44 +13,8 @@
         Rejoice eternally.
     {% endif %}
 
-    {# monero case #}
-    {% if not request.user.is_grandfathered and request.user.monero_address %}
-    {% if request.user.is_premium %}
-    <p>
-        Currently on <strong>Premium Plan</strong>.
-    </p>
-    <p>
-        Our Premium Plan costs 0.05 XMR per year and includes all features including
-        the ability to set a custom domain.
-    </p>
-    <p>
-        Your Monero address is:
-    </p>
-    <code style="word-wrap: break-word; background: #ffd9c3;">
-        {{ request.user.monero_address }}
-    </code>
-    {% else %}
-    <p>
-        Currently on <strong>Free Plan</strong>.
-    </p>
-    <p>
-        Our Premium Plan costs 0.05 XMR per year and includes all features including
-        the ability to set a custom domain.
-    </p>
-    <p>
-        Subscribe by sending 0.05 XMR to the Monero address below.
-    </p>
-    <code style="word-wrap: break-word; background: #ffd9c3;">
-        {{ request.user.monero_address }}
-    </code>
-    <p>
-        Please allow 48H for the transaction to be verified and mataroa to get up-to-date.
-    </p>
-    {% endif %}
-    {% endif %}
-
     {# stripe case #}
-    {% if not request.user.is_grandfathered and not request.user.monero_address %}
+    {% if not request.user.is_grandfathered %}
 
     {# stripe case - premium intro #}
     {% if request.user.is_premium %}
@@ -129,7 +93,7 @@
     </p>
     <ul>
         {% for invoice in invoice_list %}
-        <li
+        <li>
             <span title="Period: {{ invoice.period_start|date:"Y-m-d" }} – {{ invoice.period_end|date:"Y-m-d" }}">
                 {{ invoice.created|date }}
             </span>

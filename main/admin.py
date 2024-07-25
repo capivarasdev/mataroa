@@ -61,7 +61,6 @@ class UserAdmin(DjUserAdmin):
                     "webring_next_url",
                     "stripe_customer_id",
                     "stripe_subscription_id",
-                    "monero_address",
                     "is_premium",
                     "is_grandfathered",
                     "is_approved",

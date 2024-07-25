@@ -167,10 +167,6 @@ def billing_index(request):
             },
         )
 
-    # respond for monero case
-    if request.user.monero_address:
-        return render(request, "main/billing_index.html")
-
     stripe.api_key = settings.STRIPE_API_KEY
 
     # create stripe customer for user if it does not exist
