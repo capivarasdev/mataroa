@@ -21,7 +21,7 @@ from django.http import (
     HttpResponseBadRequest,
     HttpResponseRedirect,
 )
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.views.generic import DetailView, ListView, TemplateView
@@ -135,27 +135,11 @@ class Logout(DjLogoutView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class UserCreateStepOne(CreateView):
-    form_class = forms.OnboardForm
-    template_name = "main/user_create_step_one.html"
-
-    def form_valid(self, form):
-        self.object = form.save()
-        if not form.cleaned_data["sunflower"]:
-            # this is a bot
-            messages.error(
-                self.request,
-                "If you are not a robot please go back and check the box!",
-            )
-            return redirect("index")
-        return redirect("user_create_step_two", onboard_code=self.object.code)
-
-
-class UserCreateStepTwo(CreateView):
+class UserCreate(CreateView):
     form_class = forms.UserCreationForm
     success_url = reverse_lazy("dashboard")
-    template_name = "main/user_create_step_two.html"
-    success_message = "welcome to mataroa :)"
+    template_name = "main/user_create.html"
+    success_message = f"welcome to {settings.INSTANCE_NAME} :)"
 
     def form_valid(self, form):
         if util.is_disallowed(form.cleaned_data.get("username")):
@@ -164,8 +148,6 @@ class UserCreateStepTwo(CreateView):
         self.object = form.save(commit=False)
         self.object.blog_title = self.object.username
         self.object.save()
-        self.onboard.user = self.object
-        self.onboard.save()
         user = authenticate(
             username=form.cleaned_data.get("username"),
             password=form.cleaned_data.get("password1"),
@@ -175,12 +157,6 @@ class UserCreateStepTwo(CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
     def dispatch(self, request, *args, **kwargs):
-        self.onboard = get_object_or_404(
-            models.Onboard,
-            code=kwargs["onboard_code"],
-        )
-        if self.onboard.user:
-            return redirect("index")
         return super().dispatch(request, *args, **kwargs)
 
 

@@ -185,13 +185,3 @@ class SnapshotAdmin(admin.ModelAdmin):
     )
     list_display_links = ("id", "title")
     ordering = ["-id"]
-
-
-@admin.register(models.Onboard)
-class OnboardAdmin(admin.ModelAdmin):
-    list_display = (
-        "id",
-        "user",
-        "created_at",
-    )
-    ordering = ["-id"]

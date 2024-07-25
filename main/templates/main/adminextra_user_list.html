@@ -36,16 +36,6 @@ button {
             <span>
                 {{ user.username }}
             </span>
-
-            {% if user.onboard_set.first is not None %}
-            <div>
-                <ul>
-                    <li title="{{ user.onboard_set.first.problems }}">{{ user.onboard_set.first.problems }}</li>
-                    <li title="{{ user.onboard_set.first.quality }}">{{ user.onboard_set.first.quality }}</li>
-                    <li title="{{ user.onboard_set.first.seo }}">{{ user.onboard_set.first.seo }}</li>
-                </ul>
-            </div>
-            {% endif %}
         </div>
         <div class="adminextra-content-row-actions" id="actions-{{ user.id }}">
             [
