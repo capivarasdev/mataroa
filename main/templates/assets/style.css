@@ -657,8 +657,9 @@ input[type="submit"]:disabled {
     max-width: 100%;
     margin-top: 32px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    grid-template-rows: 302px;
+    grid-template-columns: repeat(auto-fit, minmax(calc(var(--width) / 2), 1fr));
+    /* sum with 2px to account for the border */
+    grid-template-rows: calc(var(--width) / 2 + 2px);
 }
 
 .images-grid-item {
@@ -668,8 +669,8 @@ input[type="submit"]:disabled {
 }
 
 .images-grid-item img {
-    max-width: 300px;
-    max-height: 300px;
+    max-width: calc(var(--width) / 2);
+    max-height: calc(var(--width) / 2);
     object-fit: contain;
 }
 
@@ -1053,7 +1054,7 @@ pre .mi, pre .kc {
 main img {
     display: block;
     margin: 0.5rem auto;
-    max-width: 70%;
+    max-width: 50%;
 }
 
 table {
