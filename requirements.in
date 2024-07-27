@@ -4,3 +4,4 @@ gunicorn
 markdown
 pygments
 bleach[css]
+python-frontmatter

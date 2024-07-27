@@ -2,6 +2,7 @@ import io
 import uuid
 import zipfile
 
+import frontmatter
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -9,15 +10,15 @@ from django.shortcuts import render
 from main import models, util
 
 
-def prepend_hugo_frontmatter(body, post_title, pub_date, post_slug):
-    frontmatter = "+++\n"
-    frontmatter += f'title = "{post_title}"\n'
-    frontmatter += f"date = {pub_date}\n"
-    frontmatter += f'slug = "{post_slug}"\n'
-    frontmatter += "+++\n"
-    frontmatter += "\n"
+def post_with_frontmatter(post: models.Post):
+    exported = frontmatter.loads(post.body_as_text)
+    title = util.escape_quotes(post.title)
+    pub_date = post.published_at or post.created_at.date()
+    exported["title"] = title
+    exported["slug"] = post.slug
+    exported["date"] = pub_date
 
-    return frontmatter + body
+    return frontmatter.dumps(exported)
 
 
 def export_index(request):
@@ -31,23 +32,19 @@ def export_markdown(request):
         posts = models.Post.objects.filter(owner=request.user)
         export_posts = []
         for p in posts:
-            pub_date = p.published_at or p.created_at
             title = p.slug + ".md"
-            body = f"# {p.title}\n\n"
-            body += f"> Published on {pub_date.strftime('%b %-d, %Y')}\n\n"
-            body += f"{p.body}\n"
+            body = post_with_frontmatter(p)
             export_posts.append((title, io.BytesIO(body.encode())))
 
         # create zip archive in memory
         export_name = "export-markdown-" + str(uuid.uuid4())[:8]
-        container_dir = f"{request.user.username}-mataroa-blog"
         zip_buffer = io.BytesIO()
         with zipfile.ZipFile(
             zip_buffer, "a", zipfile.ZIP_DEFLATED, False
         ) as export_archive:
             for file_name, data in export_posts:
                 export_archive.writestr(
-                    export_name + f"/{container_dir}/" + file_name, data.getvalue()
+                    export_name + "/blog/" + file_name, data.getvalue()
                 )
 
         response = HttpResponse(zip_buffer.getvalue(), content_type="application/zip")
@@ -88,10 +85,7 @@ def export_hugo(request):
         export_posts = []
         for p in posts:
             title = p.slug + ".md"
-            pub_date = p.published_at or p.created_at.date()
-            body = prepend_hugo_frontmatter(
-                p.body, util.escape_quotes(p.title), pub_date, p.slug
-            )
+            body = post_with_frontmatter(p)
             export_posts.append((title, io.BytesIO(body.encode())))
 
         # create zip archive in memory

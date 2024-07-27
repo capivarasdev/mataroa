@@ -20,6 +20,10 @@ psycopg2-binary==2.9.9
     # via -r requirements.in
 pygments==2.18.0
     # via -r requirements.in
+python-frontmatter==1.1.0
+    # via -r requirements.in
+pyyaml==6.0.1
+    # via python-frontmatter
 six==1.16.0
     # via bleach
 sqlparse==0.5.1
