@@ -218,26 +218,6 @@ class BlogExportHugoTestCase(TestCase):
         self.assertContains(response, self.data["slug"].encode("utf-8"))
 
 
-class BlogExportEpubTestCase(TestCase):
-    def setUp(self):
-        self.user = models.User.objects.create(username="alice")
-        self.client.force_login(self.user)
-        self.data = {
-            "title": "Welcome post",
-            "slug": "welcome-post",
-            "body": "Content sentence.",
-        }
-        self.post = models.Post.objects.create(owner=self.user, **self.data)
-
-    def test_blog_export(self):
-        response = self.client.post(reverse("export_epub"))
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response["Content-Type"], "application/epub")
-        self.assertContains(response, b"OEBPS/titlepage.xhtml")
-        self.assertContains(response, b"OEBPS/toc.xhtml")
-        self.assertContains(response, b"OEBPS/author.xhtml")
-
-
 class BlogNotificationListTestCase(TestCase):
     def setUp(self):
         self.user = models.User.objects.create(username="alice")

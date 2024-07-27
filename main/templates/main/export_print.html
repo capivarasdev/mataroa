@@ -21,19 +21,24 @@
 
     {% for p in posts %}
     <article>
-        <h1>{{ p.title }}</h1>
-
-        <div class="posts-item-byline">
+        <header>
+          <h1>{{ p.title }}</h1>
+          <p>
             {% if p.published_at and p.is_published %}
-            Published on <time datetime="{{ p.published_at|date:'Y-m-d' }}" itemprop="datePublished">{{ p.published_at|date:'F j, Y' }}</time>
+            <time datetime="{{ p.published_at|date:'Y-m-d' }}" itemprop="datePublished">{{ p.published_at|date:'d M Y' }}</time>
             {% elif p.published_at and not p.is_published %}
-            SCHEDULED for <time datetime="{{ p.published_at|date:'Y-m-d' }}" itemprop="datePublished">{{ p.published_at|date:'F j, Y' }}</time>
+            SCHEDULED for <time datetime="{{ p.published_at|date:'Y-m-d' }}" itemprop="datePublished">{{ p.published_at|date:'d M Y' }}</time>
             {% else %}
-            DRAFT — Last updated on <time datetime="{{ p.updated_at|date:'Y-m-d' }}" itemprop="dateModified">{{ p.updated_at|date:'F j, Y' }}</time>
+            DRAFT — Last updated on <time datetime="{{ p.updated_at|date:'Y-m-d' }}" itemprop="dateModified">{{ p.updated_at|date:'d M Y' }}</time>
             {% endif %}
-        </div>
+            {% if request.user.is_authenticated and request.subdomain == request.user.username %}
+            | <a href="{% url 'post_update' p.slug %}">Edit post</a>
+            | <a href="{% url 'post_delete' p.slug %}">Delete</a>
+            {% endif %}
+          </p>
+        </header>
 
-        <div class="posts-item-body">
+        <div class="posts-item-body" itemprop="articleBody">
             {{ p.body_as_html|safe }}
         </div>
     </article>

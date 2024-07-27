@@ -11,7 +11,6 @@
     </p>
     <ul>
         <li><a href="#export-markdown">Markdown</a>: all blog posts as .md files, zip archived</li>
-        <li><a href="#export-book">Book</a>: all blog posts as chapters in an .epub book</li>
         <li><a href="#export-print">Print</a>: renders all blog posts in one page</li>
         <li><a href="#export-hugo">Hugo</a>: reliable and very popular static site generators</li>
     </ul>
@@ -34,19 +33,6 @@
     <form method="post" action="{% url 'export_markdown' %}">
         {% csrf_token %}
         <input type="submit" value="Export as markdown files">
-    </form>
-    {% endif %}
-
-    <h2 id="export-book">Book</h2>
-    <p>
-        Book export in an epub format, with blog posts as chapters, a table of
-        contents, and author page.
-    </p>
-
-    {% if request.user.is_authenticated %}
-    <form method="post" action="{% url 'export_epub' %}">
-        {% csrf_token %}
-        <input type="submit" value="Export as epub book">
     </form>
     {% endif %}
 

@@ -108,7 +108,6 @@ urlpatterns += [
         name="export_markdown",
     ),
     path("export/hugo/", export.export_hugo, name="export_hugo"),
-    path("export/epub/", export.export_epub, name="export_epub"),
     path("export/print/", export.export_print, name="export_print"),
     path(
         "export/unsubscribe/<uuid:unsubscribe_key>/",
