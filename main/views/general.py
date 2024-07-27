@@ -86,9 +86,6 @@ def index(request):
         else:
             return redirect("//" + settings.CANONICAL_HOST + reverse("index"))
 
-    if request.user.is_authenticated:
-        return redirect("blog_index")
-
     last_posts = (
         models.Post.objects.filter(
             published_at__isnull=False,
