@@ -17,8 +17,21 @@ def post_with_frontmatter(post: models.Post):
     exported["title"] = title
     exported["slug"] = post.slug
     exported["date"] = pub_date
+    exported["draft"] = post.is_draft
 
     return frontmatter.dumps(exported)
+
+
+def export_posts(user: models.User):
+    # get all user posts and add them into export_posts encoded
+    posts = models.Post.objects.filter(owner=user)
+    exported = []
+    for p in posts:
+        title = p.slug + ".md"
+        body = post_with_frontmatter(p)
+        exported.append((title, io.BytesIO(body.encode())))
+
+    return exported
 
 
 def export_index(request):
@@ -28,13 +41,7 @@ def export_index(request):
 @login_required
 def export_markdown(request):
     if request.method == "POST":
-        # get all user posts and add them into export_posts encoded
-        posts = models.Post.objects.filter(owner=request.user)
-        export_posts = []
-        for p in posts:
-            title = p.slug + ".md"
-            body = post_with_frontmatter(p)
-            export_posts.append((title, io.BytesIO(body.encode())))
+        exported_posts = export_posts(request.user)
 
         # create zip archive in memory
         export_name = "export-markdown-" + str(uuid.uuid4())[:8]
@@ -42,7 +49,7 @@ def export_markdown(request):
         with zipfile.ZipFile(
             zip_buffer, "a", zipfile.ZIP_DEFLATED, False
         ) as export_archive:
-            for file_name, data in export_posts:
+            for file_name, data in exported_posts:
                 export_archive.writestr(
                     export_name + "/blog/" + file_name, data.getvalue()
                 )
@@ -81,12 +88,7 @@ def export_hugo(request):
             hugo_baseof = hugo_baseof_file.read()
 
         # get all user posts and add them into export_posts encoded
-        posts = models.Post.objects.filter(owner=request.user)
-        export_posts = []
-        for p in posts:
-            title = p.slug + ".md"
-            body = post_with_frontmatter(p)
-            export_posts.append((title, io.BytesIO(body.encode())))
+        exported_posts = export_posts(request.user)
 
         # create zip archive in memory
         export_name = "export-hugo-" + str(uuid.uuid4())[:8]
@@ -115,7 +117,7 @@ def export_hugo(request):
                 export_name + "/themes/mataroa/layouts/_default/baseof.html",
                 hugo_baseof,
             )
-            for file_name, data in export_posts:
+            for file_name, data in exported_posts:
                 export_archive.writestr(
                     export_name + "/content/blog/" + file_name, data.getvalue()
                 )
