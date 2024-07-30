@@ -52,7 +52,7 @@ class User(AbstractUser):
     footer_note = models.TextField(
         blank=True,
         null=True,
-        default="Powered by [mataroa.blog](https://mataroa.blog/).",
+        default="Powered by [capivaras.dev](https://capivaras.dev/).",
         help_text="Supports markdown",
     )
 
