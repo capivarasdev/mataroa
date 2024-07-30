@@ -68,7 +68,7 @@ def export_hugo(request):
             blog_byline = request.user.blog_byline or ""
             hugo_config = (
                 hugo_config_file.read()
-                .replace("example.com", f"{request.user.username}.mataroa.blog")
+                .replace("example.com", f"{request.user.username}.capivaras.dev")
                 .replace("Example blog title", blog_title)
                 .replace(
                     "Example blog description", "\\n".join(blog_byline.splitlines())

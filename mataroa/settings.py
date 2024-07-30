@@ -32,14 +32,14 @@ LOCALDEV = os.getenv("LOCALDEV") == "1"
 ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
-    f".{os.getenv('DOMAIN', 'mataroa.blog')}",
+    f".{os.getenv('DOMAIN', 'capivaras.dev')}",
     ".mataroalocal.blog",
     "*",
 ]
 
 ADMINS = [("Theodore Keloglou", "zf@sirodoht.com")]
 
-CANONICAL_HOST = os.getenv("DOMAIN", "mataroa.blog")
+CANONICAL_HOST = os.getenv("DOMAIN", "capivaras.dev")
 if LOCALDEV:
     CANONICAL_HOST = "mataroalocal.blog:8000"
 
@@ -206,7 +206,7 @@ if not DEBUG and not LOCALDEV:
 # Translate
 
 TRANSLATE_API_URL = os.getenv(
-    "TRANSLATE_API_URL", "https://translate.mataroa.blog/api/generate"
+    "TRANSLATE_API_URL", "https://translate.capivaras.dev/api/generate"
 )
 TRANSLATE_API_TOKEN = os.getenv("TRANSLATE_API_TOKEN", "")
 

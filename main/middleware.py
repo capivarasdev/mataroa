@@ -25,7 +25,7 @@ def host_middleware(get_response):
             and host_parts[1] == canonical_parts[0]  # should be "mataroa"
             and host_parts[2] == canonical_parts[1]  # should be "blog"
         ):
-            # this case is for <subdomain>.mataroa.blog:
+            # this case is for <subdomain>.capivaras.dev:
             # * set subdomain to given subdomain
             # * the lists indexes are different because CANONICAL_HOST has no subdomain
             # * also validation will happen inside views
