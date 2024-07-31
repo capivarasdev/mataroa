@@ -3,6 +3,7 @@ from datetime import datetime
 from django.contrib.syndication.views import Feed
 from django.http import Http404
 from django.utils import timezone
+from django.utils.feedgenerator import Atom1Feed
 
 from main import models
 
@@ -45,3 +46,17 @@ class RSSBlogFeed(Feed):
     def item_pubdate(self, item):
         # set time to 00:00 because we don't store time for published_at field
         return datetime.combine(item.published_at, datetime.min.time())
+
+
+class AtomBlogFeed(RSSBlogFeed):
+    feed_type = Atom1Feed
+    subtitle = RSSBlogFeed.description
+
+    def __call__(self, request, *args, **kwargs):
+        if not hasattr(request, "subdomain"):
+            raise Http404()
+
+        user = models.User.objects.get(username=request.subdomain)
+        models.AnalyticPage.objects.create(user=user, path="atom")
+
+        return super().__call__(request, *args, **kwargs)

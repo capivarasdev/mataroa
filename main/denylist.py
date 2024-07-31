@@ -69,6 +69,7 @@ DISALLOWED_USERNAMES = [
 # not allowed to create a blog page with these as slugs
 DISALLOWED_PAGE_SLUGS = [
     "analytics",
+    "atom",
     "billing",
     "blog",
     "dashboard",

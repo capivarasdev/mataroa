@@ -5,6 +5,7 @@
 
 {% block head_extra %}
 <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url 'rss_feed' %}">
+<link rel="alternate" type="application/atom+xml" title="Atom" href="{% url 'atom_feed' %}">
 {% if blog_user.blog_byline %}
 <meta name="description" content="{{ blog_user.blog_byline_as_text }}">
 {% endif %}

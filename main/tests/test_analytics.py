@@ -120,20 +120,20 @@ class PageAnalyticIndexTestCase(TestCase):
         self.assertEqual(models.AnalyticPage.objects.filter(path="index").count(), 1)
 
 
-class PageAnalyticRSSTestCase(TestCase):
+class PageAnalyticFeedTestCase(TestCase):
     """Test 'rss' special page analytics."""
 
     def setUp(self):
         self.user = models.User.objects.create(username="alice")
 
-    def test_rss_analytic(self):
-        response = self.client.get(
-            reverse("rss_feed"),
-            # needs HTTP_HOST because we need to request it on the subdomain
-            HTTP_HOST=self.user.username + "." + settings.CANONICAL_HOST,
-        )
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(models.AnalyticPage.objects.filter(path="rss").count(), 1)
+    def test_feed_analytic(self):
+        for feed in ["rss", "atom"]:
+            response = self.client.get(
+                reverse(f"{feed}_feed"),
+                HTTP_HOST=self.user.username + "." + settings.CANONICAL_HOST,
+            )
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(models.AnalyticPage.objects.filter(path=feed).count(), 1)
 
 
 class AnalyticListTestCase(TestCase):
@@ -264,28 +264,44 @@ class PageAnalyticDetailIndexTestCase(TestCase):
         self.assertContains(response, "1 hits")
 
 
-class PageAnalyticDetailRSSTestCase(TestCase):
+class PageAnalyticDetailFeedTestCase(TestCase):
     """Test analytic detail for 'rss' special page."""
 
-    def setUp(self):
+    def setup_feed_analytic_detail(self, feed):
         self.user = models.User.objects.create(username="alice")
         self.client.force_login(self.user)
 
         # logout so that analytic is counted
         self.client.logout()
 
-        # register one sample rss page analytic
+        # register one sample feed page analytic
         self.client.get(
-            reverse("rss_feed"),
+            reverse(feed),
             HTTP_HOST=self.user.username + "." + settings.CANONICAL_HOST,
         )
 
         # login again to access analytic page detail dashboard page
         self.client.force_login(self.user)
 
-    def test_page_analytic_detail(self):
+    def test_rss_page_analytic_detail(self):
+        self.setup_feed_analytic_detail("rss_feed")
+
         response = self.client.get(
             reverse("analytic_page_detail", args=("rss",)),
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, '<div class="analytics-chart">')
+        self.assertContains(
+            response,
+            '<svg version="1.1" viewBox="0 0 500 192" xmlns="http://www.w3.org/2000/svg">',
+        )
+        self.assertContains(response, "1 hits")
+
+    def test_atom_page_analytic_detail(self):
+        self.setup_feed_analytic_detail("atom_feed")
+
+        response = self.client.get(
+            reverse("analytic_page_detail", args=("atom",)),
         )
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, '<div class="analytics-chart">')

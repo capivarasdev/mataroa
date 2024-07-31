@@ -3,7 +3,7 @@
     <nav>
         <ul>
             <a href="/">« {{ blog_user.blog_title }}</a> |
-            <a href="{% url 'rss_feed' %}">RSS</a>
+            <a href="{% url 'rss_feed' %}">RSS</a> / <a href="{% url 'atom_feed' %}">Atom</a>
             {% if blog_user.notifications_on %}
             | <a href="{% url 'notification_subscribe' %}">Newsletter</a>
             {% endif %}
