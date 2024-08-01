@@ -17,57 +17,73 @@ button {
     <h1>Adminextra Users</h1>
 </main>
 <section class="adminextra-content">
-
-    {% for user in user_list %}
-    <div class="adminextra-content-row">
-        <div class="adminextra-content-row-id">
-            <a href="{% url 'admin:main_user_change' user.id %}" target="_blank" title="{{ user.date_joined }}">
-                {{ user.id }}
-            </a>
-        </div>
-        <div class="adminextra-content-row-username">
-            <span>{{ user.class_status }}</span>
-            {% if user.is_approved %}
-            <span title="approved">✅</span>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Status</th>
+                <th>Username</th>
+                <th>E-mail</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in user_list %}
+            <tr>
+                <td>
+                    <a href="{% url 'admin:main_user_change' user.id %}" target="_blank" title="{{ user.date_joined }}">
+                        {{ user.id }}
+                    </a>
+                </td>
+                <td>
+                    {% if user.is_approved %}
+                        <span title="approved">✅</span>
+                    {% else %}
+                        <span title="unapproved">❌</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ user.blog_url }}" target="_blank">
+                        {{ user.username }}
+                    </a>
+                </td>
+                <td>
+                    {% if not user.email %}
+                        N/A
+                    {% else %}
+                        {{ user.email }}
+                    {% endif %}
+                    </a>
+                </td>
+                <td>
+                    [
+                        {% if not user.is_approved %}
+                        <span onclick="approveUser('{{ user.id }}')" style="color: green; cursor: pointer;">approve</span>
+                        | <a style="color: red;" href="{% url 'admin:main_user_delete' user.id %}" target="_blank">delete</a>
+                        {% else %}
+                        <span onclick="unapproveUser('{{ user.id }}')" style="color: blue; cursor: pointer;">unapprove</span>
+                        {% endif %}
+                    ]
+                </td>
+            </tr>
+            {% if user.post_set.all %}
+            <tr>
+                <td colspan="5">
+                    <div class="adminextra-content-row-posts">
+                        <ol>
+                            {% for post in user.post_set.all %}
+                            <li>
+                                <a href="{{ post.get_absolute_url }}" target="_blank" rel="noopener">{{ post.title }}</a>
+                            </li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                </td>
+            </tr>
             {% endif %}
-            <span>
-                {{ user.username }}
-            </span>
-        </div>
-        <div class="adminextra-content-row-actions" id="actions-{{ user.id }}">
-            [
-                {% if not user.is_approved %}
-                <span onclick="approveUser('{{ user.id }}')" style="color: green; cursor: pointer;">approve</span>
-                | <a style="color: red;" href="{% url 'admin:main_user_delete' user.id %}" target="_blank">delete</a>
-                {% else %}
-                <span onclick="unapproveUser('{{ user.id }}')" style="color: blue; cursor: pointer;">unapprove</span>
-                {% endif %}
-            ]
-        </div>
-        <div class="adminextra-content-row-url">
-            <a href="{{ user.blog_url }}" target="_blank">
-                {{ user.blog_url }}
-            </a>
-        </div>
-        <div class="adminextra-content-row-email">
-            {{ user.email }}
-        </div>
-        <div class="adminextra-content-row-posts">
-            <ul>
-                {% for post in user.post_set.all %}
-                <li>
-                    <a href="{{ post.get_absolute_url }}" target="_blank" rel="noopener">
-                        {{ post.title }}</a>
-                    <small>
-                        <button onclick="translatePost(event)">translate</button>
-                    </small>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-    {% endfor %}
-
+            {% endfor %}
+        </tbody>
+    </table>
 </section>
 {% endblock %}
 

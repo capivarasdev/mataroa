@@ -814,10 +814,11 @@ svg .analytics-chart-text {
 /*    }*/
 /*}*/
 
-/*.adminextra-content-row-posts {*/
-/*    overflow: hidden;*/
-/*    text-overflow: ellipsis;*/
-/*}*/
+.adminextra-content-row-posts {
+    max-height: 200px;
+    overflow-y: scroll;
+    text-overflow: ellipsis;
+}
 
 /*.adminextra-content-cards {*/
 /*    display: flex;*/
