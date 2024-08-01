@@ -11,9 +11,10 @@ from main import models, util
 
 
 def post_with_frontmatter(post: models.Post):
-    exported = frontmatter.loads(post.body_as_text)
+    exported = frontmatter.Post(post.body)
     title = util.escape_quotes(post.title)
     pub_date = post.published_at or post.created_at.date()
+
     exported["title"] = title
     exported["slug"] = post.slug
     exported["date"] = pub_date
