@@ -28,13 +28,16 @@
         {% endfor %}
         </ul>
     </section>
+</main>
+{% include 'partials/footer.html' %}
+{% endblock %}
 
+{% block footer %}
+    <p>
+        Visit our <a href="https://news.capivaras.dev">announcements blog</a> for updates.
+    </p>
     <p>
         Are you concerned about our business model?
         Check the <a href="{% url 'transparency' %}">transparency page</a> and see for yourself how bad it is!
     </p>
-</main>
-
-{% include 'partials/footer.html' %}
-
 {% endblock %}
