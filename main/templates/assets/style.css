@@ -3,6 +3,7 @@
     --component-padding: 20px;
     --bg: white;
     --secondary-bg: #eee;
+    --code-bg: #eee;
     --primary: #007bff;
     --text-color: #444;
     --code-literal: #484;
@@ -24,6 +25,7 @@
     :root {
         --bg: #121415;
         --secondary-bg: #2d2d2d;
+        --code-bg: #16191c;
         --primary: #78bef8;
         --text-color: #444;
         --code-literal: #f79;
@@ -939,17 +941,10 @@ a:hover {
 /*.page-list li span {*/
 /*    flex: 0 0 140px;*/
 /*}*/
-
 code {
     font-size: 1rem;
-    background: var(--secondary-bg);
+    background-color: var(--code-bg);
     padding: 0 0.3rem;
-}
-
-@media (prefers-color-scheme: dark) {
-    code {
-        background: var(--secondary-bg);
-    }
 }
 
 pre code {
@@ -961,100 +956,7 @@ pre code {
 pre {
     padding: 10px;
     overflow-x: auto;
-    background-color: var(--secondary-bg);
-}
-
-@media (prefers-color-scheme: dark) {
-    pre {
-        border: solid 1px var(--text-color);
-    }
-}
-
-pre .c, pre .c1, pre .cm {
-    color: #707070;
-    font-style: italic;
-}
-
-@media (prefers-color-scheme: dark) {
-    pre .c, pre .c1, pre .cm {
-        color: #999;
-    }
-}
-
-pre .gd {
-    color: var(--red-color);
-    background-color: var(--lighter-red-color);
-}
-
-pre .gi {
-    color: var(--green-color);
-    background-color: var(--lighter-green-color);
-}
-
-pre .gu {
-    color: var(--purple-color);
-}
-
-pre .k, pre .kd, pre .kn, pre .kr, pre .nt, pre .nb, pre .gh {
-    color: #008;
-}
-
-@media (prefers-color-scheme: dark) {
-    pre .k, pre .kd, pre .kn, pre .kr, pre .nt, pre .nb, pre .gh {
-        color: #69f;
-    }
-}
-
-pre .cp {
-    color: #222;
-    font-weight: bold;
-}
-
-@media (prefers-color-scheme: dark) {
-    pre .cp {
-        color: #db8;
-    }
-}
-
-pre .kt {
-    color: #44f;
-}
-
-@media (prefers-color-scheme: dark) {
-    pre .kt {
-        color: #3cf;
-    }
-}
-
-pre .s, pre .s2, pre .sd, pre .s1 {
-    color: var(--code-literal);
-    font-style: italic;
-}
-
-@media (prefers-color-scheme: dark) {
-    pre .s, pre .s2, pre .sd, pre .s1 {
-        color: var(--code-literal);
-    }
-}
-
-pre .no {
-    color: var(--code-literal);
-}
-
-@media (prefers-color-scheme: dark) {
-    pre .no {
-        color: var(--code-literal);
-    }
-}
-
-pre .mi, pre .kc {
-    color: var(--code-literal);
-}
-
-@media (prefers-color-scheme: dark) {
-    pre .mi, pre .kc {
-        color: var(--code-literal);
-    }
+    background-color: var(--code-bg);
 }
 
 main img {
