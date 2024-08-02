@@ -27,7 +27,9 @@ class FeedTestCase(TestCase):
                 HTTP_HOST=self.user.username + "." + settings.CANONICAL_HOST,
             )
             self.assertEqual(response.status_code, 200)
-            self.assertEqual(response["Content-Type"], f"application/{feed}+xml; charset=utf-8")
+            self.assertEqual(
+                response["Content-Type"], f"application/{feed}+xml; charset=utf-8"
+            )
             self.assertContains(response, self.data["title"])
             self.assertContains(response, self.data["slug"])
             self.assertContains(response, self.data["body"])
@@ -65,7 +67,9 @@ class FeedDraftsTestCase(TestCase):
                 HTTP_HOST=self.user.username + "." + settings.CANONICAL_HOST,
             )
             self.assertEqual(response.status_code, 200)
-            self.assertEqual(response["Content-Type"], f"application/{feed}+xml; charset=utf-8")
+            self.assertEqual(
+                response["Content-Type"], f"application/{feed}+xml; charset=utf-8"
+            )
             self.assertContains(response, self.post_published["title"])
             self.assertContains(response, self.post_published["slug"])
             self.assertContains(response, self.post_published["body"])
@@ -98,7 +102,9 @@ class FeedFuturePostTestCase(TestCase):
                 HTTP_HOST=self.user.username + "." + settings.CANONICAL_HOST,
             )
             self.assertEqual(response.status_code, 200)
-            self.assertEqual(response["Content-Type"], f"application/{feed}+xml; charset=utf-8")
+            self.assertEqual(
+                response["Content-Type"], f"application/{feed}+xml; charset=utf-8"
+            )
             self.assertNotContains(response, self.data["title"])
             self.assertNotContains(response, self.data["slug"])
             self.assertNotContains(response, self.data["body"])
