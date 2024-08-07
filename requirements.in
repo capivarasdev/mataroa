@@ -1,7 +1,6 @@
 django
 psycopg2-binary
 gunicorn
-markdown
-pygments
+marko[codehilite]
 bleach[css]
 python-frontmatter

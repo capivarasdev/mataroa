@@ -4,12 +4,14 @@ import uuid
 import zipfile
 
 import bleach
-import markdown
 from bleach.css_sanitizer import CSSSanitizer
 from django.conf import settings
 from django.utils.text import slugify
+from marko import Markdown
 
 from main import denylist, models
+
+md = Markdown(extensions=["gfm", "codehilite", "footnote"])
 
 
 def is_disallowed(username):
@@ -82,17 +84,8 @@ def md_to_html(markdown_string, strip_tags=False):
     """Return HTML formatted string, given a markdown one."""
     if not markdown_string:
         return ""
-    dirty_html = markdown.markdown(
-        text=markdown_string,
-        extensions=[
-            "markdown.extensions.fenced_code",
-            "markdown.extensions.tables",
-            "markdown.extensions.footnotes",
-            "markdown.extensions.toc",
-            "markdown.extensions.codehilite",
-            "def_list",
-        ],
-    )
+
+    dirty_html = md.convert(markdown_string)
     return clean_html(dirty_html, strip_tags)
 
 
