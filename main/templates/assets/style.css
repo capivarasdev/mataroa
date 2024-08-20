@@ -1060,7 +1060,13 @@ pre .mi, pre .kc {
 main img {
     display: block;
     margin: 0.5rem auto;
-    max-width: 50%;
+    max-width: 85%;
+}
+
+@media (max-width: 480px) {
+    main img {
+        max-width: 100%;
+    }
 }
 
 table {
