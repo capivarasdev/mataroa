@@ -6,7 +6,7 @@ from main import models
 
 class ImageCreateTestCase(TestCase):
     def setUp(self):
-        self.user = models.User.objects.create(username="alice")
+        self.user = models.User.objects.create(username="alice", is_approved=True)
         self.client.force_login(self.user)
 
     def test_image_upload(self):
@@ -15,6 +15,15 @@ class ImageCreateTestCase(TestCase):
             self.assertTrue(models.Image.objects.filter(name="vulf").exists())
             self.assertEqual(models.Image.objects.get(name="vulf").extension, "jpeg")
             self.assertIsNotNone(models.Image.objects.get(name="vulf").slug)
+
+    def test_unapproved_user_cannot_upload(self):
+        self.user.is_approved = False
+        self.user.save()
+        with open("main/tests/testdata/vulf.jpeg", "rb") as fp:
+            self.client.post(reverse("image_list"), {"file": fp})
+            self.assertFalse(models.Image.objects.filter(name="vulf").exists())
+            # self.assertEqual(models.Image.objects.get(name="vulf").extension, "jpeg")
+            # self.assertIsNotNone(models.Image.objects.get(name="vulf").slug)
 
 
 class ImageCreateAnonTestCase(TestCase):
@@ -27,7 +36,7 @@ class ImageCreateAnonTestCase(TestCase):
 
 class ImageDetailTestCase(TestCase):
     def setUp(self):
-        self.user = models.User.objects.create(username="alice")
+        self.user = models.User.objects.create(username="alice", is_approved=True)
         self.client.force_login(self.user)
         with open("main/tests/testdata/vulf.jpeg", "rb") as fp:
             self.client.post(reverse("image_list"), {"file": fp})
@@ -46,7 +55,7 @@ class ImageDetailNotOwnTestCase(TestCase):
     """Tests user cannot open image detail page of another user's image."""
 
     def setUp(self):
-        self.victim = models.User.objects.create(username="bob")
+        self.victim = models.User.objects.create(username="bob", is_approved=True)
         self.client.force_login(self.victim)
         with open("main/tests/testdata/vulf.jpeg", "rb") as fp:
             self.client.post(reverse("image_list"), {"file": fp})
@@ -65,7 +74,7 @@ class ImageDetailUsedByTestCase(TestCase):
     """Tests used by posts feature works."""
 
     def setUp(self):
-        self.user = models.User.objects.create(username="alice")
+        self.user = models.User.objects.create(username="alice", is_approved=True)
         self.client.force_login(self.user)
         with open("main/tests/testdata/vulf.jpeg", "rb") as fp:
             self.client.post(reverse("image_list"), {"file": fp})
@@ -89,7 +98,7 @@ class ImageDetailUsedByTestCase(TestCase):
 
 class ImageRawTestCase(TestCase):
     def setUp(self):
-        self.user = models.User.objects.create(username="alice")
+        self.user = models.User.objects.create(username="alice", is_approved=True)
         self.client.force_login(self.user)
         with open("main/tests/testdata/vulf.jpeg", "rb") as fp:
             self.client.post(reverse("image_list"), {"file": fp})
@@ -105,7 +114,7 @@ class ImageRawTestCase(TestCase):
 
 class ImageRawWrongExtTestCase(TestCase):
     def setUp(self):
-        self.user = models.User.objects.create(username="alice")
+        self.user = models.User.objects.create(username="alice", is_approved=True)
         self.client.force_login(self.user)
         with open("main/tests/testdata/vulf.jpeg", "rb") as fp:
             self.client.post(reverse("image_list"), {"file": fp})
@@ -132,7 +141,7 @@ class ImageRawNotFoundTestCase(TestCase):
 
 class ImageUpdateTestCase(TestCase):
     def setUp(self):
-        self.user = models.User.objects.create(username="alice")
+        self.user = models.User.objects.create(username="alice", is_approved=True)
         self.client.force_login(self.user)
         with open("main/tests/testdata/vulf.jpeg", "rb") as fp:
             self.client.post(reverse("image_list"), {"file": fp})
@@ -151,7 +160,7 @@ class ImageUpdateAnonTestCase(TestCase):
     """Tests non logged in user cannot update image."""
 
     def setUp(self):
-        self.user = models.User.objects.create(username="alice")
+        self.user = models.User.objects.create(username="alice", is_approved=True)
         self.client.force_login(self.user)
         with open("main/tests/testdata/vulf.jpeg", "rb") as fp:
             self.client.post(reverse("image_list"), {"file": fp})
@@ -171,14 +180,14 @@ class ImageUpdateNotOwnTestCase(TestCase):
     """Tests user cannot update other user's image name."""
 
     def setUp(self):
-        self.victim = models.User.objects.create(username="bob")
+        self.victim = models.User.objects.create(username="bob", is_approved=True)
         self.client.force_login(self.victim)
         with open("main/tests/testdata/vulf.jpeg", "rb") as fp:
             self.client.post(reverse("image_list"), {"file": fp})
         self.image = models.Image.objects.get(name="vulf")
         self.client.logout()
 
-        self.attacker = models.User.objects.create(username="alice")
+        self.attacker = models.User.objects.create(username="alice", is_approved=True)
         self.client.force_login(self.attacker)
 
     def test_image_update_not_own(self):
@@ -192,7 +201,7 @@ class ImageUpdateNotOwnTestCase(TestCase):
 
 class ImageDeleteTestCase(TestCase):
     def setUp(self):
-        self.user = models.User.objects.create(username="alice")
+        self.user = models.User.objects.create(username="alice", is_approved=True)
         self.client.force_login(self.user)
         with open("main/tests/testdata/vulf.jpeg", "rb") as fp:
             self.client.post(reverse("image_list"), {"file": fp})
@@ -209,7 +218,7 @@ class ImageDeleteAnonTestCase(TestCase):
     """Tests non logged in user cannot delete image."""
 
     def setUp(self):
-        self.user = models.User.objects.create(username="alice")
+        self.user = models.User.objects.create(username="alice", is_approved=True)
         self.client.force_login(self.user)
         with open("main/tests/testdata/vulf.jpeg", "rb") as fp:
             self.client.post(reverse("image_list"), {"file": fp})
@@ -227,7 +236,7 @@ class ImageDeleteNotOwnTestCase(TestCase):
     """Tests user cannot delete other's image."""
 
     def setUp(self):
-        self.victim = models.User.objects.create(username="bob")
+        self.victim = models.User.objects.create(username="bob", is_approved=True)
         self.client.force_login(self.victim)
         with open("main/tests/testdata/vulf.jpeg", "rb") as fp:
             self.client.post(reverse("image_list"), {"file": fp})

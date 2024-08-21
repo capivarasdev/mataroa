@@ -458,6 +458,11 @@ class ImageList(LoginRequiredMixin, FormView):
         form_class = self.get_form_class()
         form = self.get_form(form_class)
         files = request.FILES.getlist("file")
+
+        if not request.user.is_approved:
+            form.add_error(None, "Only approved users can upload images.")
+            return self.form_invalid(form)
+
         if form.is_valid():
             for f in files:
                 name_ext_parts = f.name.rsplit(".", 1)
