@@ -8,9 +8,9 @@ asgiref==3.8.1
     # via django
 bleach[css]==6.1.0
     # via -r requirements.in
-django==5.0.8
+django==5.1.1
     # via -r requirements.in
-gunicorn==22.0.0
+gunicorn==23.0.0
     # via -r requirements.in
 marko[codehilite]==2.1.2
     # via -r requirements.in
