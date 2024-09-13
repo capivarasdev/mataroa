@@ -87,6 +87,8 @@ def export_hugo(request):
             hugo_index = hugo_index_file.read()
         with open("./export_base_hugo/baseof.html") as hugo_baseof_file:
             hugo_baseof = hugo_baseof_file.read()
+        with open("./export_base_hugo/404.html") as hugo_404_file:
+            hugo_404 = hugo_404_file.read()
 
         # get all user posts and add them into export_posts encoded
         exported_posts = export_posts(request.user)
@@ -106,6 +108,9 @@ def export_hugo(request):
             )
             export_archive.writestr(
                 export_name + "/themes/mataroa/layouts/index.html", hugo_index
+            )
+            export_archive.writestr(
+                export_name + "/themes/mataroa/layouts/404.html", hugo_404
             )
             export_archive.writestr(
                 export_name + "/themes/mataroa/layouts/_default/single.html",
