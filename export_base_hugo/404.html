@@ -1,10 +1,8 @@
 {{ define "main" }}
-<main>
-    <h1>404</h1>
-    <h2>Page Not Found</h2>
-    <p>The URL you requested does not exist on this blog. Got lost?</p>
-    <p><a href="#" onclick="history.back();">← Go back</a> or return to the <a href="{{ .Site.Home.RelPermalink }}">homepage</a>.</p>
-</main>
+<h1>404</h1>
+<h2>Page Not Found</h2>
+<p>The URL you requested does not exist on this blog. Got lost?</p>
+<p><a href="#" onclick="history.back();">← Go back</a> or return to the <a href="{{ .Site.Home.RelPermalink }}">homepage</a>.</p>
 
 <footer>
     {{- with .Site.GetPage "/" }}
