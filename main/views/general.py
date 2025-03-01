@@ -20,7 +20,7 @@ from django.http import (
     HttpResponseBadRequest,
     HttpResponseRedirect,
 )
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.views.generic import DetailView, ListView, TemplateView
@@ -859,7 +859,8 @@ class NotificationUnsubscribe(SuccessMessageMixin, FormView):
         return context
 
     def form_valid(self, form):
-        notification = models.Notification.objects.get(
+        notification = get_object_or_404(
+            models.Notification,
             blog_user=self.request.blog_user,
             email=form.cleaned_data.get("email"),
         )
