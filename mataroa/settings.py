@@ -37,7 +37,7 @@ ALLOWED_HOSTS = [
     "*",
 ]
 
-ADMINS = [("Theodore Keloglou", "zf@sirodoht.com")]
+ADMINS = [("capivaras.dev admin", "admin@capivaras.dev")]
 
 CANONICAL_HOST = os.getenv("DOMAIN", "capivaras.dev")
 if LOCALDEV:
