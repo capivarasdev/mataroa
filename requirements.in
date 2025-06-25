@@ -1,6 +1,0 @@
-django
-psycopg2-binary
-gunicorn
-marko[codehilite]
-bleach[css]
-python-frontmatter

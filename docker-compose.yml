@@ -16,9 +16,9 @@ services:
       - "5433:5432"
   web:
     command: >
-      bash -c "./manage.py migrate;
-               ./manage.py collectstatic --noinput;
-               ./manage.py runserver 0.0.0.0:8000"
+      bash -c "uv run ./manage.py migrate;
+               uv run ./manage.py collectstatic --noinput;
+               uv run ./manage.py runserver 0.0.0.0:8000"
     build: .
     image: mataroa
     volumes:

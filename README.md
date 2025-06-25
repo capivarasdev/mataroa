@@ -220,12 +220,10 @@ ruff check --fix
 
 ## Python dependencies
 
-We use [pip-tools](https://github.com/jazzband/pip-tools) to manage our Python dependencies:
+We use [uv](https://docs.astral.sh/uv/) to manage our Python dependencies:
 
 ```sh
-pip-compile -U requirements.in
-pip install --upgrade pip
-pip install -r requirements.txt
+uv sync --locked
 ```
 
 ## Deployment

@@ -11,9 +11,11 @@ RUN apt-get update && \
     netcat-traditional \
     && rm -rf /var/lib/apt/lists/*
 
-COPY requirements.txt /code/
-RUN pip install -U pip && pip install -Ur /code/requirements.txt
+COPY --from=ghcr.io/astral-sh/uv:0.7.14 /uv /uvx /bin/
 
+ADD . /code
 WORKDIR /code
-COPY . /code/
-RUN /code/manage.py collectstatic --noinput
+
+RUN uv sync --locked --no-dev
+
+RUN uv run --no-dev manage.py collectstatic --noinput

@@ -13,7 +13,7 @@ Vague rules include:
     * Packages should hold a high quality of coding practices.
 * No JavaScript libraries / dependencies.
 
-Current list of top-level PyPI dependencies (source at [requirements.in](/requirements.in)):
+Current list of top-level PyPI dependencies (source at [pyproject.toml](/pyproject.toml)):
 
 * [Django](https://pypi.org/project/Django/)
 * [psycopg2-binary](https://pypi.org/project/psycopg2-binary/)
@@ -26,10 +26,7 @@ Current list of top-level PyPI dependencies (source at [requirements.in](/requir
 
 After approving a dependency, the process to add it is:
 
-1. Assuming a venv is activated and `requirements.dev.txt` are installed.
-1. Add new dependency in [`requirements.in`](/requirements.in).
-1. Run `pip-compile` to generate [`requirements.txt`](/requirements.txt)
-1. Run `pip install -r requirements.txt`
+1. `uv add <dependency>`
 
 ## Upgrading dependencies
 
