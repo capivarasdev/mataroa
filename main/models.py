@@ -86,6 +86,11 @@ class User(AbstractUser):
         help_text="Enable/disable automatic post backups.",
         verbose_name="Post Backups On",
     )
+    markdown_link_paste_on = models.BooleanField(
+        default=False,
+        help_text="Enable/disable automatic markdown link formatting on paste.",
+        verbose_name="Markdown link formatting",
+    )
     export_unsubscribe_key = models.UUIDField(default=uuid.uuid4, unique=True)
 
     # webring related

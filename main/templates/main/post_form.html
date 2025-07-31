@@ -83,6 +83,10 @@
     {% include "assets/drag-and-drop-upload.js" %}
     {% include "assets/make-draft-button.js" %}
 
+    {% if request.user.markdown_link_paste_on %}
+    {% include "assets/paste-link.js" %}
+    {% endif %}
+
     {% if request.user.post_backups_on %}
     {% include "assets/save-snapshot.js" %}
     {% endif %}

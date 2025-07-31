@@ -225,3 +225,25 @@ class UserDomainCheckTestCase(TestCase):
     def test_domain_unknown(self):
         response = self.client.get(reverse("domain_check") + "?domain=randomdomain.com")
         self.assertEqual(response.status_code, 403)
+
+
+class UserMarkdownLinkOnPaste(TestCase):
+    def setUp(self):
+        self.user = models.User.objects.create(username="alice")
+        self.client.force_login(self.user)
+
+    def test_markdown_link_turned_on(self):
+        self.user.markdown_link_paste_on = True
+        self.user.save()
+        response = self.client.get(
+            reverse("post_create"),
+        )
+        self.assertContains(response, "formatOnPaste")
+
+    def test_markdown_link_turned_off(self):
+        self.user.markdown_link_turned_on = False
+        self.user.save()
+        response = self.client.get(
+            reverse("post_create"),
+        )
+        self.assertNotContains(response, "formatOnPaste")

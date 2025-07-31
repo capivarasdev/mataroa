@@ -171,6 +171,7 @@ class UserUpdate(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         "custom_domain",
         "notifications_on",
         "mail_export_on",
+        "markdown_link_paste_on",
         "redirect_domain",
     ]
     template_name = "main/user_update.html"
