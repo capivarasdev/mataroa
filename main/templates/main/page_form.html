@@ -66,5 +66,8 @@
     document.querySelector('input[name="title"]').focus();
 
     {% include "assets/drag-and-drop-upload.js" %}
+    {% if request.user.markdown_link_paste_on %}
+    {% include "assets/paste-link.js" %}
+    {% endif %}
 </script>
 {% endblock %}

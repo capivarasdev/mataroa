@@ -1,27 +1,44 @@
-function formatOnPaste(event) {
-    const clipboardData = event.clipboardData || window.clipboardData;
-    const pastedData = clipboardData.getData('text');
+(() => {
+    const bodyElem = document.querySelector('textarea[name="body"]')
 
-    const bodyElem = document.querySelector('textarea[name="body"]');
+    function formatOnPaste(e) {
+        const {selectionStart: start, selectionEnd: end} = bodyElem;
 
-    const start = bodyElem.selectionStart;
-    const end = bodyElem.selectionEnd;
+        // nothing is selected, paste functions normally
+        if (start === end) {
+            return;
+        }
 
-    if (start !== end) {
-        event.preventDefault(); // Stop the default paste
+        const clip = (e.clipboardData || window.clipboardData).getData('text')
+        const url = clip.trim();
 
-        const selectedText = bodyElem.value.substring(start, end);
-        const before = bodyElem.value.substring(0, start);
-        const after = bodyElem.value.substring(end);
+        const selectedText = bodyElem.value.slice(start, end) || url;
+        const replacement = `[${selectedText}](${url})`;
 
-        const markdownLink = `[${selectedText}](${pastedData})`;
+        e.preventDefault();
 
-        bodyElem.value = before + markdownLink + after;
+        if (document.queryCommandSupported && document.queryCommandSupported('insertText')) {
+            bodyElem.focus();
+            // Ensure selection is still active before we insert
+            const {selectionStart, selectionEnd} = bodyElem;
+            if (selectionStart !== null && selectionEnd !== null) {
+                document.execCommand('insertText', false, replacement);
+                return;
+            }
+        }
 
-        // Move cursor after inserted markdown
-        const newCursorPosition = before.length + markdownLink.length;
-        bodyElem.setSelectionRange(newCursorPosition, newCursorPosition);
+        if (typeof bodyElem.setRangeText === 'function') {
+            const start = bodyElem.selectionStart;
+            const end = bodyElem.selectionEnd;
+            bodyElem.setRangeText(replacement, start, end, 'end'); // place caret at end
+            // Fire an input event so any listeners (e.g., frameworks) are notified
+            bodyElem.dispatchEvent(new InputEvent('input', {
+                bubbles: true,
+                inputType: 'insertFromPaste',
+                data: replacement
+            }));
+        }
     }
-}
 
-bodyElem.addEventListener('paste', formatOnPaste);
+    bodyElem.addEventListener('paste', formatOnPaste)
+})()
