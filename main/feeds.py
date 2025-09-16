@@ -32,7 +32,7 @@ class RSSBlogFeed(Feed):
             owner__username=self.subdomain,
             published_at__isnull=False,
             published_at__lte=timezone.now().date(),
-        ).order_by("-published_at")
+        ).order_by("-published_at")[:10]
 
     def item_title(self, item):
         return item.title
