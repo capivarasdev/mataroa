@@ -3,55 +3,61 @@
 {% block title %}Dashboard — {{ request.user.username }} at Mataroa{% endblock %}
 
 {% block content %}
-<main>
-    <h1>Dashboard</h1>
-    <p class="dashboard-cta">
-        <a href="{% url 'post_create' %}"><b>New post »</b></a>
-    </p>
+    <main>
+        <h1>Dashboard</h1>
+        <p class="dashboard-cta">
+            <a href="{% url 'post_create' %}"><b>New post »</b></a>
+        </p>
 
-    <strong>Content</strong>
-    <div class="dashboard-list">
-        <a href="{% url 'image_list' %}">Images</a>
-        <br><a href="{% url 'page_list' %}">Pages</a>
+        <section class="dashboard-section">
+            <h2>Content</h2>
+            <ul>
+                <li><a href="{% url 'image_list' %}">Images</a></li>
+                <li><a href="{% url 'page_list' %}">Pages</a></li>
+                {% if request.user.notifications_on %}
+                    <li><a href="{% url 'notificationrecord_list' %}">Newsletter</a></li>
+                {% endif %}
+                <li><a href="{% url 'analytic_list' %}">Analytics</a></li>
+                {% if request.user.post_backups_on %}
+                    <li><a href="{% url 'snapshot_list' %}">Post Backups</a></li>
+                {% endif %}
+            </ul>
+        </section>
 
-        {% if request.user.notifications_on %}
-        <br><a href="{% url 'notificationrecord_list' %}">Newsletter</a>
+        <section class="dashboard-section">
+            <h2>Manage</h2>
+            <ul>
+                <li><a href="{% url 'webring' %}">Webring</a></li>
+                <li><a href="{% url 'api_docs' %}">API</a></li>
+                <li><a href="{% url 'blog_import' %}">Import posts</a></li>
+                <li><a href="{% url 'export_index' %}">Export blog</a></li>
+            </ul>
+        </section>
+
+        <section class="dashboard-section">
+            <h2>Account</h2>
+            <ul>
+                <li><a href="{% url 'user_update' %}">Blog settings</a></li>
+                <li><a href="{% url 'password_change' %}">Change password</a></li>
+                <li><a href="mailto:admin@capivaras.dev">Help and support</a></li>
+                <li>
+                    <form method="post" action="{% url 'logout' %}" class="form-inline">
+                        {% csrf_token %}
+                        <input type="submit" value="Log out">
+                    </form>
+                </li>
+            </ul>
+        </section>
+
+        {% if request.user.is_superuser %}
+            <section class="dashboard-section">
+                <h2>Administration</h2>
+                <ul>
+                    <li><a href="{% url 'admin:index' %}">Django Admin</a></li>
+                    <li><a href="{% url 'adminextra_user_list' %}">Adminextra List Users</a></li>
+                    <li><a href="{% url 'adminextra_user_cards' %}">Adminextra Cards</a></li>
+                </ul>
+            </section>
         {% endif %}
-
-        <br><a href="{% url 'analytic_list' %}">Analytics</a>
-        {% if request.user.post_backups_on %}
-        <br><a href="{% url 'snapshot_list' %}">Post Backups</a>
-        {% endif %}
-    </div>
-
-    <strong>Manage</strong>
-    <div class="dashboard-list">
-        <a href="{% url 'webring' %}">Webring</a>
-        <br><a href="{% url 'api_docs' %}">API</a>
-
-        <br><a href="{% url 'blog_import' %}">Import posts</a>
-        <br><a href="{% url 'export_index' %}">Export blog</a>
-    </div>
-
-    <strong>Account</strong>
-    <div class="dashboard-list">
-        <a href="{% url 'user_update' %}">Blog settings</a>
-        <br><a href="{% url 'password_change' %}">Change password</a>
-        <br><a href="mailto:admin@capivaras.dev">Help and support</a>
-        <br>
-        <form method="post" action="{% url 'logout' %}" class="form-inline">
-            {% csrf_token %}
-            <input type="submit" value="Log out">
-        </form>
-    </div>
-
-    {% if request.user.is_superuser %}
-    <strong>Administration</strong>
-    <div class="dashboard-list">
-        <a href="{% url 'admin:index' %}">Django Admin</a>
-        <br><a href="{% url 'adminextra_user_list' %}">Adminextra List Users</a>
-        <br><a href="{% url 'adminextra_user_cards' %}">Adminextra Cards</a>
-    </div>
-    {% endif %}
-</main>
+    </main>
 {% endblock %}

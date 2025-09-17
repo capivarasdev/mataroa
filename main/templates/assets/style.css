@@ -85,15 +85,15 @@ textarea {
 
 input[type="submit"] {
     cursor: pointer;
-    background: var(--link-color);
+    background: var(--ascent-color);
     color: #fff;
-    border: 1px solid var(--ascent-color);
+    border: 1px solid var(--link-color);
     padding: 8px 24px;
 }
 
 input[type="submit"]:hover,
 input[type="submit"]:active {
-    background: var(--ascent-color);
+    background: var(--link-color);
 }
 
 input[type="submit"]:disabled {
@@ -444,5 +444,23 @@ figure figcaption {
 @media (max-width: 768px) {
     figure {
         width: 90%;
+    }
+}
+
+.dashboard-section {
+    & ul {
+        list-style-type: none;
+        padding: unset;
+        margin: 0;
+
+        & li {
+            padding-bottom: calc(var(--component-padding) / 3);
+        }
+    }
+
+    & h2 {
+        margin-top: calc(var(--component-padding) / 2);
+        margin-bottom: 0;
+        padding-bottom: 0;
     }
 }
