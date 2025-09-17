@@ -1,11 +1,11 @@
 <hr>
 <footer>
-    <nav>
+    <nav class="navigation">
         <ul>
-            <a href="/">« {{ blog_user.blog_title }}</a> |
-            <a href="{% url 'rss_feed' %}">RSS</a> / <a href="{% url 'atom_feed' %}">Atom</a>
+            <li><a href="/">« {{ blog_user.blog_title }}</a></li>
+            <li><a href="{% url 'rss_feed' %}">RSS</a> / <a href="{% url 'atom_feed' %}">Atom</a></li>
             {% if blog_user.notifications_on %}
-            | <a href="{% url 'notification_subscribe' %}">Newsletter</a>
+            <li><a href="{% url 'notification_subscribe' %}">Newsletter</a></li>
             {% endif %}
         </ul>
     </nav>

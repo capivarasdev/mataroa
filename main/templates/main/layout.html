@@ -29,17 +29,19 @@
         {% if request.user.is_authenticated %}
 
         {% if not request.subdomain or request.subdomain == request.user.username %}
-        <nav>
-            {% if request.subdomain %}
-            <a href="{% url 'index' %}">View blog</a>
-            {% else %}
-            <a href="//{{ request.user.username }}.{{ request.get_host }}">View blog</a>
-            {% endif %}
-            | <a href="{% url 'dashboard' %}">Dashboard</a>
-            | <a href="{% url 'post_create' %}">New post</a>
-            {% if blog_user.custom_domain %}
-            | <a href="//{{ blog_user.custom_domain }}{{ request.path }}">See in {{ blog_user.custom_domain }}</a>
-            {% endif %}
+        <nav class="navigation">
+            <ul>
+                {% if request.subdomain %}
+                    <li><a href="{% url 'index' %}">View blog</a></li>
+                {% else %}
+                <li><a href="//{{ request.user.username }}.{{ request.get_host }}">View blog</a></li>
+                {% endif %}
+                <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                <li><a href="{% url 'post_create' %}">New post</a></li>
+                {% if blog_user.custom_domain %}
+                <li><a href="//{{ blog_user.custom_domain }}{{ request.path }}">See in {{ blog_user.custom_domain }}</a></li>
+                {% endif %}
+            </ul>
         </nav>
         {% endif %}
 

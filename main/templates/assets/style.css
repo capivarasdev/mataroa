@@ -415,16 +415,6 @@ ol li:not(:last-child) {
     margin-bottom: 0.35rem;
 }
 
-footer nav ul {
-    list-style: none;
-    margin-left: 0;
-    padding-left: 0;
-}
-
-footer nav ul li {
-    display: inline-block;
-}
-
 figure {
     margin: 0 auto;
     width: 60%;
@@ -479,23 +469,24 @@ figure figcaption {
     }
 }
 
+.navigation {
+    & ul {
+        list-style: none none;
+        margin: 0;
+        padding: unset;
+        & li {
+            display: inline;
+            padding-right: calc(var(--component-padding) / 4);
+        }
+    }
+    & li:not(:last-child)::after {
+        padding-left: calc(var(--component-padding) / 4);
+        content: " |";
+    }
+}
+
 .blog {
     & .blog-title {
       margin-bottom: 0;
-    }
-    & .blog-pages {
-        & ul {
-            list-style: none none;
-            margin: 0;
-            padding: unset;
-            & li {
-                display: inline;
-                padding-right: calc(var(--component-padding) / 4);
-            }
-        }
-        & li:not(:last-child)::after {
-            padding-left: calc(var(--component-padding) / 4);
-            content: " |";
-        }
     }
 }
