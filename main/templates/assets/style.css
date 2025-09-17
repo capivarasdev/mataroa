@@ -449,7 +449,7 @@ figure figcaption {
 
 .dashboard-section {
     & ul {
-        list-style-type: none;
+        list-style: none;
         padding: unset;
         margin: 0;
 
@@ -462,5 +462,26 @@ figure figcaption {
         margin-top: calc(var(--component-padding) / 2);
         margin-bottom: 0;
         padding-bottom: 0;
+    }
+}
+
+.blog {
+    & .blog-title {
+      margin-bottom: 0;
+    }
+    & .blog-pages {
+        & ul {
+            list-style: none none;
+            margin: 0;
+            padding: unset;
+            & li {
+                display: inline;
+                padding-right: calc(var(--component-padding) / 4);
+            }
+        }
+        & li:not(:last-child)::after {
+            padding-left: calc(var(--component-padding) / 4);
+            content: " |";
+        }
     }
 }

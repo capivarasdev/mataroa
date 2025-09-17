@@ -12,19 +12,19 @@
 {% endblock %}
 
 {% block content %}
-<nav>
-    {% for page in pages %}
-    <a href="{% url 'page_detail' page.slug %}">{{ page.title }}</a>
-    {% if not forloop.last %}
-    |
-    {% endif %}
-    {% endfor %}
-</nav>
 
 <main class="blog" itemscope itemtype="http://schema.org/Blog">
     {% if blog_user.blog_title %}
-    <h1 itemprop="name">{{ blog_user.blog_title }}</h1>
+    <h1 class="blog-title" itemprop="name">{{ blog_user.blog_title }}</h1>
     {% endif %}
+
+    <nav class="blog-pages">
+        <ul>
+        {% for page in pages %}
+            <li><a href="{% url 'page_detail' page.slug %}">{{ page.title }}</a></li>
+        {% endfor %}
+        </ul>
+    </nav>
 
     {% if blog_user.blog_byline %}
     <div class="byline" itemprop="about">

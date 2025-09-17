@@ -7,16 +7,6 @@
             {% if blog_user.notifications_on %}
             | <a href="{% url 'notification_subscribe' %}">Newsletter</a>
             {% endif %}
-
-            {% for page in pages %}
-                {% if forloop.first %}
-                    |
-                {% endif %}
-                <a href="{% url 'page_detail' page.slug %}">{{ page.title }}</a>
-                {% if not forloop.last %}
-                    |
-                {% endif %}
-            {% endfor %}
         </ul>
     </nav>
 
