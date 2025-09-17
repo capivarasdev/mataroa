@@ -19,6 +19,9 @@
     --red-color: light-dark(rgb(255, 0, 0), rgb(255, 31, 31));
     --lighter-red-color: light-dark(rgb(255, 0, 0, 0.05),rgb(255, 31, 31, 0.1));
     --purple-color: light-dark(#cd1ecd,#dd47ec);
+
+    --alert-success-bg: #d4edda;
+    --alert-success-color: #155724;
 }
 
 button,
@@ -48,6 +51,17 @@ button,
     -webkit-appearance: button;
 }
 
+aside[class='messages'] {
+    margin-top: var(--component-padding);
+    & div {
+          padding: .75rem 1.25rem;
+    }
+    & .alert-success {
+        background-color: var(--alert-success-bg);
+        color: var(--alert-success-color);
+        border: 1px solid var(--alert-success-color);
+    }
+}
 .alert-error {
     color: var(--red-color);
 }

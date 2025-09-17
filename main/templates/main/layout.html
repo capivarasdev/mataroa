@@ -26,14 +26,6 @@
     </head>
 
     <body>
-        {% if messages %}
-        <aside>
-            {% for message in messages %}
-            <div {% if message.tags %}class="alert-{{ message.tags }}"{% endif %}>{{ message|safe }}</div>
-            {% endfor %}
-        </aside>
-        {% endif %}
-
         {% if request.user.is_authenticated %}
 
         {% if not request.subdomain or request.subdomain == request.user.username %}
@@ -49,6 +41,16 @@
             | <a href="//{{ blog_user.custom_domain }}{{ request.path }}">See in {{ blog_user.custom_domain }}</a>
             {% endif %}
         </nav>
+        {% endif %}
+
+        {% if messages %}
+        <aside class="messages">
+            {% for message in messages %}
+            <div {% if message.tags %}class="alert-{{ message.tags }}"{% endif %}>
+                {{ message|safe }}
+            </div>
+            {% endfor %}
+        </aside>
         {% endif %}
 
         {% if request.user.redirect_domain %}
