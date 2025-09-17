@@ -72,7 +72,7 @@ class User(AbstractUser):
     )
 
     notifications_on = models.BooleanField(
-        default=True,
+        default=False,
         help_text="Allow/disallow people subscribing for email newsletter for new posts.",
         verbose_name="Newsletter",
     )
