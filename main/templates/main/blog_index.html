@@ -55,11 +55,12 @@
         {% for p in posts %}
         {% if p.published_at %}
         <li>
-          <a href="{% url 'post_detail' p.slug %}">{{ p.title }}</a>
-            <small>— <time datetime="{{ p.published_at|date:'Y-m-d' }}" itemprop="datePublished">{{ p.published_at|date:'d M Y' }}</time>
-              {% if not p.is_published %}
-                — SCHEDULED
-              {% endif %}
+            <h3><a href="{% url 'post_detail' p.slug %}">{{ p.title }}</a></h3>
+            <small>
+                <time datetime="{{ p.published_at|date:'Y-m-d' }}" itemprop="datePublished">{{ p.published_at|date:'F d, Y' }}</time>
+                {% if not p.is_published %}
+                    — SCHEDULED
+                {% endif %}
             </small>
         </li>
         {% endif %}

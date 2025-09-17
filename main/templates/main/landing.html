@@ -17,12 +17,13 @@
         {% for p in posts %}
         {% if p.published_at %}
         <li>
-          <a href="{{ p.get_proper_url }}">{{ p.title }}</a> by <a href="{{ p.owner.blog_url }}">{{ p.owner.blog_title }}</a>
-            <small>— <time datetime="{{ p.published_at|date:'Y-m-d' }}" itemprop="datePublished">{{ p.published_at|date:'d M Y' }}</time>
+          <h3><a href="{{ p.get_proper_url }}">{{ p.title }}</a></h3>
+          <small>
+              <time datetime="{{ p.published_at|date:'Y-m-d' }}" itemprop="datePublished">{{ p.published_at|date:'F d, Y' }}</time>
               {% if not p.is_published %}
                 — SCHEDULED
-              {% endif %}
-            </small>
+              {% endif %} by <a href="{{ p.owner.blog_url }}">{{ p.owner.blog_title }}</a>
+          </small>
         </li>
         {% endif %}
         {% endfor %}
