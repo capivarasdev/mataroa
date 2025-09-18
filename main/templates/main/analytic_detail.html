@@ -6,7 +6,14 @@
 <main>
     <h1>{{ title }}</h1>
 
-    <a href="{% url 'analytic_list' %}">« all analytics</a>
+    <nav class="navigation">
+        <ul>
+            <li><a href="{% url 'analytic_list' %}">« All analytics</a></li>
+            {% if slug %}
+                <li><a href="{% url 'post_detail' slug %}">Go to post</a></li>
+            {% endif %}
+        </ul>
+    </nav>
 
     <h2>Analytics since {{ date_25d_ago }}</h2>
     <p>

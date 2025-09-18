@@ -3,32 +3,56 @@
 {% block title %}Analytics — {{ request.user.username }} at Mataroa{% endblock %}
 
 {% block content %}
-<main>
-    <h1>Analytics</h1>
-    <p>
-        List of pages:
-    </p>
-    <ul>
-        <li><a href="{% url 'analytic_page_detail' 'index' %}">index</a></li>
-        <li><a href="{% url 'analytic_page_detail' 'atom' %}">atom</a></li>
-        <li><a href="{% url 'analytic_page_detail' 'rss' %}">rss</a></li>
-        {% for page in page_list %}
-        <li><a href="{% url 'analytic_page_detail' page.slug %}">{{ page.slug }}</a></li>
-        {% endfor %}
-    </ul>
-    {% if post_list %}
-    <p>
-        List of posts:
-    </p>
-    <ul>
-        {% for post in post_list %}
-        <li style="{% if not post.is_published %}opacity: 0.75;{% endif %}">
-            <a href="{% url 'analytic_post_detail' post.slug %}">
-                {{ post.title }}
-            </a>
-        </li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-</main>
+    <main>
+        <h1>Analytics</h1>
+
+        <section>
+            <h2>Top 10 posts</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Post</th>
+                    <th>Views</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for post in top_posts %}
+                    <tr>
+                        <td><a href="{% url 'analytic_post_detail' post.slug %}">
+                            {{ post.title }}
+                        </a></td>
+                        <td>{{ post.num_views }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>List of pages</h2>
+            <ul>
+                <li><a href="{% url 'analytic_page_detail' 'index' %}">index</a></li>
+                <li><a href="{% url 'analytic_page_detail' 'atom' %}">atom</a></li>
+                <li><a href="{% url 'analytic_page_detail' 'rss' %}">rss</a></li>
+                {% for page in page_list %}
+                    <li><a href="{% url 'analytic_page_detail' page.slug %}">{{ page.slug }}</a></li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        {% if post_list %}
+            <section>
+                <h2>List of posts</h2>
+                <ul>
+                    {% for post in post_list %}
+                        <li style="{% if not post.is_published %}opacity: 0.75;{% endif %}">
+                            <a href="{% url 'analytic_post_detail' post.slug %}">
+                                {{ post.title }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </section>
+        {% endif %}
+    </main>
 {% endblock %}

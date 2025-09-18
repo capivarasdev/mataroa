@@ -700,6 +700,15 @@ class AnalyticList(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        top_posts = (models.Post.objects
+            .filter(owner=self.request.user)
+            .annotate(num_views=Count("analyticpost"))
+            .filter(num_views__gt=0)
+            .order_by("-num_views")
+            [:10])
+
+        context["top_posts"] = top_posts
         context["post_list"] = models.Post.objects.filter(owner=self.request.user)
         context["page_list"] = models.Page.objects.filter(owner=self.request.user)
         return context
@@ -752,6 +761,7 @@ class AnalyticPostDetail(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = self.object.title
+        context["slug"] = self.object.slug
 
         # calculate dates
         current_date = timezone.now().date()

@@ -153,11 +153,12 @@ class AnalyticListTestCase(TestCase):
         )
         self.assertEqual(response.status_code, 200)
 
-        self.assertContains(response, "List of pages:")
+        self.assertContains(response, "Top 10 posts")
+        self.assertContains(response, "List of pages")
         self.assertContains(response, "index")
         self.assertContains(response, "rss")
 
-        self.assertContains(response, "List of posts:")
+        self.assertContains(response, "List of posts")
         self.assertContains(response, "Welcome post")
 
 
