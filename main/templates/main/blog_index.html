@@ -14,10 +14,6 @@
 {% block content %}
 
 <main class="blog" itemscope itemtype="http://schema.org/Blog">
-    {% if blog_user.blog_title %}
-    <h1 class="blog-title" itemprop="name">{{ blog_user.blog_title }}</h1>
-    {% endif %}
-
     <nav class="navigation">
         <ul>
         {% for page in pages %}
@@ -25,6 +21,10 @@
         {% endfor %}
         </ul>
     </nav>
+
+    {% if blog_user.blog_title %}
+    <h1 class="blog-title" itemprop="name">{{ blog_user.blog_title }}</h1>
+    {% endif %}
 
     {% if blog_user.blog_byline %}
     <div class="byline" itemprop="about">

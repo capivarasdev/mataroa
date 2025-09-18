@@ -476,17 +476,17 @@ figure figcaption {
         padding: unset;
         & li {
             display: inline;
-            padding-right: calc(var(--component-padding) / 4);
+            padding-right: calc(var(--component-padding) / 6);
         }
     }
     & li:not(:last-child)::after {
-        padding-left: calc(var(--component-padding) / 4);
+        padding-left: calc(var(--component-padding) / 6);
         content: " |";
     }
 }
 
 .blog {
     & .blog-title {
-      margin-bottom: 0;
+        margin-bottom: 0;
     }
 }
