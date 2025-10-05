@@ -7,6 +7,7 @@ from django.utils.feedgenerator import Atom1Feed
 
 from main import models
 
+MAX_ENTRIES = 15
 
 class RSSBlogFeed(Feed):
     title = ""
@@ -32,7 +33,7 @@ class RSSBlogFeed(Feed):
             owner__username=self.subdomain,
             published_at__isnull=False,
             published_at__lte=timezone.now().date(),
-        ).order_by("-published_at")[:10]
+        ).order_by("-published_at")[:MAX_ENTRIES]
 
     def item_title(self, item):
         return item.title
