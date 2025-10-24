@@ -6,23 +6,23 @@
 
 {% block content %}
 <main>
-    {% if blog_user.blog_title %}
-    <a href="{% url 'index' %}" class="pages-item-brand">{{ blog_user.blog_title }}</a>
-    {% endif %}
+    <article>
+        <header>
+            <h1>{{ page.title }}</h1>
 
-    <h1 class="pages-item-title">{{ page.title }}</h1>
+            {% if request.user.is_authenticated and request.subdomain == user.username %}
+            <div>
+                Last updated on <time datetime="{{ page.updated_at|date:'Y-m-d' }}">{{ page.updated_at|date:'F d, Y' }}</time>
+                | <a href="{% url 'page_update' page.slug %}">Edit page</a>
+                | <a href="{% url 'page_delete' page.slug %}" class="type-delete">Delete</a>
+            </div>
+            {% endif %}
+        </header>
 
-    {% if request.user.is_authenticated and request.subdomain == user.username %}
-    <div class="pages-item-byline">
-        Last updated on <time datetime="{{ page.updated_at|date:'Y-m-d' }}">{{ page.updated_at|date:'F d, Y' }}</time>
-        | <a href="{% url 'page_update' page.slug %}">Edit page</a>
-        | <a href="{% url 'page_delete' page.slug %}" class="type-delete">Delete</a>
-    </div>
-    {% endif %}
-
-    <div class="pages-item-body">
-        {{ page.body_as_html|safe }}
-    </div>
+        <div class="pages-item-body">
+            {{ page.body_as_html|safe }}
+        </div>
+    </article>
 </main>
 
 {% include 'partials/webring.html' %}
