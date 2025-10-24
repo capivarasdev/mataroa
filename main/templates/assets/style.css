@@ -241,7 +241,7 @@ article header > p {
 blockquote {
     border: 1px solid var(--text-color);
     border-left: 6px solid var(--text-color);
-    margin: 2rem 0;
+    margin: 1.5rem 0;
     padding: calc(var(--component-padding) / 2);
 }
 
