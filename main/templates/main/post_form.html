@@ -90,5 +90,9 @@
     {% if request.user.post_backups_on %}
     {% include "assets/save-snapshot.js" %}
     {% endif %}
+
+    {% if form.initial %}
+    {% include "assets/save-draft.js" %}
+    {% endif %}
 </script>
 {% endblock %}
