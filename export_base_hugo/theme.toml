@@ -1,7 +1,0 @@
-name = "mataroa"
-description = "Theme from the mataroa blog platform"
-min_version = "0.41"
-
-[author]
-    name = "mataroa"
-    homepage = "https://mataroa.blog/"
