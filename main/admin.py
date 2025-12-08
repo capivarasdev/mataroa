@@ -53,7 +53,6 @@ class UserAdmin(DjUserAdmin):
                     "custom_domain",
                     "notifications_on",
                     "mail_export_on",
-                    "post_backups_on",
                     "export_unsubscribe_key",
                     "webring_name",
                     "webring_prev_url",
@@ -170,15 +169,4 @@ class ExportRecordAdmin(admin.ModelAdmin):
         "user",
     )
     list_display_links = ("id", "name")
-    ordering = ["-id"]
-
-
-@admin.register(models.Snapshot)
-class SnapshotAdmin(admin.ModelAdmin):
-    list_display = (
-        "id",
-        "title",
-        "owner",
-    )
-    list_display_links = ("id", "title")
     ordering = ["-id"]

@@ -367,52 +367,6 @@ class PostDelete(LoginRequiredMixin, DeleteView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class SnapshotCreate(LoginRequiredMixin, CreateView):
-    model = models.Snapshot
-    fields = ["title", "body"]
-
-    def get_queryset(self):
-        return models.Snapshot.objects.filter(
-            owner=self.request.user,
-        )
-
-    def form_valid(self, form):
-        # save new Snapshot with current user as owner
-        self.object = form.save(commit=False)
-        self.object.owner = self.request.user
-        self.object.body = util.remove_control_chars(self.object.body)
-        self.object.save()
-        # delete all user Snapshots except the most recent 250
-        most_recent = (
-            models.Snapshot.objects.filter(owner=self.request.user)
-            .order_by("-id")[:250]
-            .values_list("id", flat=True)
-        )
-        models.Snapshot.objects.filter(owner=self.request.user).exclude(
-            id__in=most_recent
-        ).delete()
-        return HttpResponse()
-
-
-class SnapshotList(LoginRequiredMixin, ListView):
-    model = models.Snapshot
-
-    def get_queryset(self):
-        return models.Snapshot.objects.filter(
-            owner=self.request.user,
-        )
-
-
-class SnapshotDetail(LoginRequiredMixin, DetailView):
-    model = models.Snapshot
-
-    def dispatch(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        if request.user != self.object.owner:
-            raise PermissionDenied()
-        return super().dispatch(request, *args, **kwargs)
-
-
 class BlogImport(LoginRequiredMixin, FormView):
     form_class = forms.UploadTextFilesForm
     template_name = "main/blog_import.html"

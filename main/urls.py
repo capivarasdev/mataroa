@@ -51,17 +51,8 @@ urlpatterns += [
     ),
 ]
 
-# blog posts and post snapshots
+# blog posts
 urlpatterns += [
-    path(
-        "post-backups/create/", general.SnapshotCreate.as_view(), name="snapshot_create"
-    ),
-    path("post-backups/", general.SnapshotList.as_view(), name="snapshot_list"),
-    path(
-        "post-backups/<int:pk>/",
-        general.SnapshotDetail.as_view(),
-        name="snapshot_detail",
-    ),
     path("new/post/", general.PostCreate.as_view(), name="post_create"),
     path("blog/<slug:slug>/", general.PostDetail.as_view(), name="post_detail"),
     path("posts/<slug:slug>/", general.post_detail_redir, name="post_detail_redir_a"),

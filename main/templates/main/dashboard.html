@@ -18,9 +18,6 @@
                     <li><a href="{% url 'notificationrecord_list' %}">Newsletter</a></li>
                 {% endif %}
                 <li><a href="{% url 'analytic_list' %}">Analytics</a></li>
-                {% if request.user.post_backups_on %}
-                    <li><a href="{% url 'snapshot_list' %}">Post Backups</a></li>
-                {% endif %}
             </ul>
         </section>
 

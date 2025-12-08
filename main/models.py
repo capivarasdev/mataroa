@@ -81,11 +81,6 @@ class User(AbstractUser):
         help_text="Enable/disable auto emailing of account exports every month.",
         verbose_name="Mail export",
     )
-    post_backups_on = models.BooleanField(
-        default=False,
-        help_text="Enable/disable automatic post backups.",
-        verbose_name="Post Backups On",
-    )
     markdown_link_paste_on = models.BooleanField(
         default=False,
         help_text="Enable/disable automatic markdown link formatting on paste.",
@@ -391,17 +386,3 @@ class ExportRecord(models.Model):
     def __str__(self):
         return self.name
 
-
-class Snapshot(models.Model):
-    """Snapshot model is used to keep track of all versions of Posts."""
-
-    title = models.CharField(max_length=300)
-    body = models.TextField(blank=True, null=True)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        ordering = ["-created_at"]
-
-    def __str__(self):
-        return self.title
