@@ -38,7 +38,7 @@ class UserAdmin(DjUserAdmin):
             url += f"//{obj.custom_domain}"
         else:
             url += f"//{obj.username}.{settings.CANONICAL_HOST}"
-        return format_html(f'<a href="{url}">{url}</a>')
+        return format_html('<a href="{}">{}</a>', url, url)
 
     fieldsets = DjUserAdmin.fieldsets + (
         (
@@ -86,7 +86,7 @@ class PostAdmin(admin.ModelAdmin):
     @admin.display
     def post_url(self, obj):
         url = util.get_protocol() + obj.get_proper_url()
-        return format_html(f'<a href="{url}">{url}</a>')
+        return format_html('<a href="{}">{}</a>', url, url)
 
 
 @admin.register(models.Page)
