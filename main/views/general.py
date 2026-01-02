@@ -12,8 +12,8 @@ from django.contrib.auth.views import LogoutView as DjLogoutView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.sitemaps.views import sitemap as DjSitemapView
 from django.core.exceptions import PermissionDenied
-from django.db.models import Count, F, Max, Window
-from django.db.models.functions import TruncDay
+from django.db.models import Count, F, Window
+from django.db.models.functions import RowNumber, TruncDay
 from django.http import (
     Http404,
     HttpResponse,
@@ -99,9 +99,13 @@ def index(request):
             published_at__lte=timezone.now().date(),
         )
         .annotate(
-            my_max=Window(expression=Max("published_at"), partition_by=F("owner"))
+            row_num=Window(
+                expression=RowNumber(),
+                partition_by=F("owner"),
+                order_by=[F("published_at").desc(), F("created_at").desc()],
+            )
         )
-        .filter(my_max=F("published_at"))
+        .filter(row_num=1)
     )
 
     return render(

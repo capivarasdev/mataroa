@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.test import TestCase
 from django.urls import reverse
+from django.utils import timezone
 
 from main import models
 
@@ -13,6 +14,155 @@ class IndexTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, settings.INSTANCE_NAME)
         self.assertContains(response, settings.INSTANCE_DESCRIPTION)
+
+
+class IndexOnePostPerUserTestCase(TestCase):
+    """Test that the homepage shows only one latest published post per user."""
+
+    def setUp(self):
+        self.user_alice = models.User.objects.create(username="alice")
+        self.user_bob = models.User.objects.create(username="bob")
+
+    def test_single_user_multiple_posts_shows_only_latest(self):
+        """When a user has multiple published posts, only the latest appears on homepage."""
+        today = timezone.now().date()
+        yesterday = today - timezone.timedelta(days=1)
+
+        models.Post.objects.create(
+            owner=self.user_alice,
+            title="Older Post",
+            slug="older-post",
+            body="Old content",
+            published_at=yesterday,
+        )
+        models.Post.objects.create(
+            owner=self.user_alice,
+            title="Newer Post",
+            slug="newer-post",
+            body="New content",
+            published_at=today,
+        )
+
+        response = self.client.get(reverse("index"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Newer Post")
+        self.assertNotContains(response, "Older Post")
+
+    def test_multiple_users_each_show_one_post(self):
+        """Each user's latest post appears once on homepage."""
+        today = timezone.now().date()
+        yesterday = today - timezone.timedelta(days=1)
+
+        models.Post.objects.create(
+            owner=self.user_alice,
+            title="Alice Old Post",
+            slug="alice-old",
+            body="Content",
+            published_at=yesterday,
+        )
+        models.Post.objects.create(
+            owner=self.user_alice,
+            title="Alice New Post",
+            slug="alice-new",
+            body="Content",
+            published_at=today,
+        )
+
+        models.Post.objects.create(
+            owner=self.user_bob,
+            title="Bob Old Post",
+            slug="bob-old",
+            body="Content",
+            published_at=yesterday,
+        )
+        models.Post.objects.create(
+            owner=self.user_bob,
+            title="Bob New Post",
+            slug="bob-new",
+            body="Content",
+            published_at=today,
+        )
+
+        response = self.client.get(reverse("index"))
+        self.assertEqual(response.status_code, 200)
+
+        self.assertContains(response, "Alice New Post")
+        self.assertContains(response, "Bob New Post")
+        self.assertNotContains(response, "Alice Old Post")
+        self.assertNotContains(response, "Bob Old Post")
+
+    def test_same_published_date_uses_created_at_as_tiebreaker(self):
+        """When posts have the same published_at, created_at is used as tiebreaker."""
+        today = timezone.now().date()
+
+        models.Post.objects.create(
+            owner=self.user_alice,
+            title="First Created Post",
+            slug="first-created",
+            body="Content",
+            published_at=today,
+        )
+        models.Post.objects.create(
+            owner=self.user_alice,
+            title="Second Created Post",
+            slug="second-created",
+            body="Content",
+            published_at=today,
+        )
+
+        response = self.client.get(reverse("index"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Second Created Post")
+        self.assertNotContains(response, "First Created Post")
+
+    def test_draft_posts_not_shown_on_homepage(self):
+        """Draft posts (published_at=None) should not appear on homepage."""
+        today = timezone.now().date()
+
+        models.Post.objects.create(
+            owner=self.user_alice,
+            title="Published Post",
+            slug="published",
+            body="Content",
+            published_at=today,
+        )
+        models.Post.objects.create(
+            owner=self.user_alice,
+            title="Draft Post",
+            slug="draft",
+            body="Content",
+            published_at=None,
+        )
+
+        response = self.client.get(reverse("index"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Published Post")
+        self.assertNotContains(response, "Draft Post")
+
+    def test_future_posts_not_shown_on_homepage(self):
+        """Posts with future published_at should not appear on homepage."""
+        today = timezone.now().date()
+        tomorrow = today + timezone.timedelta(days=1)
+
+        models.Post.objects.create(
+            owner=self.user_alice,
+            title="Today Post",
+            slug="today",
+            body="Content",
+            published_at=today,
+        )
+        models.Post.objects.create(
+            owner=self.user_alice,
+            title="Future Post",
+            slug="future",
+            body="Content",
+            published_at=tomorrow,
+        )
+
+        response = self.client.get(reverse("index"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Today Post")
+        self.assertNotContains(response, "Future Post")
 
 
 class BlogIndexTestCase(TestCase):
