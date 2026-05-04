@@ -32,14 +32,13 @@
     </div>
     {% endif %}
 
-    <hr>
+    <hr class="soft">
+
     <h2>Posts</h2>
 
     {% if request.user.is_authenticated and request.subdomain == request.user.username and drafts %}
-    <div class="drafts">
-        <strong>
-            Drafts
-        </strong>
+    <div class="drafts-block">
+        <strong>Drafts</strong>
         <ul>
             {% for d in drafts %}
             <li>
@@ -51,12 +50,12 @@
     {% endif %}
 
     <section>
-        <ul class="page-list">
+        <ul class="feed">
         {% for p in posts %}
         {% if p.published_at %}
         <li>
             <h3><a href="{% url 'post_detail' p.slug %}">{{ p.title }}</a></h3>
-            <small>
+            <small class="meta">
                 <time datetime="{{ p.published_at|date:'Y-m-d' }}" itemprop="datePublished">{{ p.published_at|date:'F d, Y' }}</time>
                 {% if not p.is_published %}
                     — SCHEDULED

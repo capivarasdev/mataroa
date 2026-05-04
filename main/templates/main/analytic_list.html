@@ -6,7 +6,7 @@
     <main>
         <h1>Analytics</h1>
 
-        <section>
+        <section class="dashboard-section">
             <h2>Top 10 posts</h2>
             <table>
                 <thead>
@@ -28,7 +28,7 @@
             </table>
         </section>
 
-        <section>
+        <section class="dashboard-section">
             <h2>List of pages</h2>
             <ul>
                 <li><a href="{% url 'analytic_page_detail' 'index' %}">index</a></li>
@@ -41,7 +41,7 @@
         </section>
 
         {% if post_list %}
-            <section>
+            <section class="dashboard-section">
                 <h2>List of posts</h2>
                 <ul>
                     {% for post in post_list %}

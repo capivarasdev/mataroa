@@ -5,31 +5,28 @@
     <head>
         <meta charset="utf-8">
         <title>{% block title %}{% endblock %}</title>
-
         {% if not request.subdomain %}
         <meta name="description" content="Blogging platform for minimalists.">
         <meta name="keywords" content="blog, blogging, platform, fast, simple, minimal">
         {% endif %}
-
         {% block head_viewport %}
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         {% endblock %}
-
         <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAEwSURBVHgB7ZVBTsMwEEX/2GolQEjkBrkBPQI5ATlKd12SLrtr78EinACOkBuQG7QSEiClzuBpWYFUTxxY1W8ZfWe+7fEfIJFInDuEgbwtyjsQlUTm3q/Oj1+58b9qOueW2apuMQC1ge28vJlcmQcwzU8KmdfdR7/M1vUOf2XgUPzSPHv5DCq46d77QmPCQMFh5+riAs0mF7JGoQwJtosyn1j7igjYUXG9enw5pQmegDW2QizkypAkaMAYvkUkZPxLGWvAd/2Au/9FHhKomvA/0RhoEQtLQI00wOifEAvReANwtkYkEs0hTdCAvGMGNhgI99ho5oKqCfdTVx0Hjrp8s/+UNWFUBrKq3nXTvtCchOxcOweEweNYolnS0ZAE1HdGMFpm36xs61D0JhKJxE++AMI7Z3YRUW4wAAAAAElFTkSuQmCC">
-
         {% block head_extra %}
         {% endblock %}
-
         <style>
             {% include 'assets/style.css' %}
         </style>
     </head>
 
     <body>
+        <div class="page">
         {% if request.user.is_authenticated %}
 
         {% if not request.subdomain or request.subdomain == request.user.username %}
         <nav class="navigation">
+            <span class="brand">capivaras.dev</span>
             <ul>
                 {% if request.subdomain %}
                     <li><a href="{% url 'index' %}">View blog</a></li>
@@ -43,17 +40,15 @@
                 {% endif %}
             </ul>
         </nav>
-        <hr/>
+        <hr class="soft" style="margin:var(--space-6) 0 var(--space-4)" />
         {% endif %}
 
         {% if messages %}
-        <aside class="messages">
             {% for message in messages %}
-            <div {% if message.tags %}class="alert-{{ message.tags }}"{% endif %}>
-                {{ message|safe }}
-            </div>
+            <aside class="flash {{ message.tags }}">
+                <span class="text">{{ message | safe }}</span>
+            </aside>
             {% endfor %}
-        </aside>
         {% endif %}
 
         {% if request.user.redirect_domain %}
@@ -68,11 +63,15 @@
         {% endif %}
 
         {% else %}
+
         {% if not request.subdomain %}
-        <nav>
-            <a href="{{ request.host }}{% url 'index' %}">Home</a>
-            | <a href="{{ request.host }}{% url 'user_create' %}">Sign up</a>
-            | <a href="{{ request.host }}{% url 'login' %}">Log in</a>
+        <nav class="navigation" style="margin-bottom: var(--space-5)">
+            <span class="brand">capivaras.dev</span>
+            <ul>
+                <li><a href="{{ request.host }}{% url 'index' %}">Home</a></li>
+                <li><a href="{{ request.host }}{% url 'user_create' %}">Sign up</a></li>
+                <li><a href="{{ request.host }}{% url 'login' %}">Log in</a></li>
+            </ul>
         </nav>
         {% endif %}
         {% endif %}
@@ -85,5 +84,6 @@
 
         {% block scripts %}
         {% endblock %}
+        </div>
     </body>
 </html>

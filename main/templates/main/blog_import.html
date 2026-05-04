@@ -13,15 +13,23 @@
         <li>They will be uploaded as drafts (unpublished).</li>
     </ul>
     <form method="post" enctype="multipart/form-data">
-        {{ form.non_field_errors }}
-        <p>
-            <input type="file" name="file" id="id_file" multiple required>
+        {% if form.non_field_errors %}
+        <aside class="flash error">
+            <span class="text">{{ form.non_field_errors }}</span>
+        </aside>
+        {% endif %}
+
+        <div class="field">
+            <label for="id_file">Files
+                <span class="hint">Select one or more text/markdown files.</span></label>
             {% if form.file.errors %}
                 {% for error in form.file.errors %}
                     <span class="form-error">{{ error|escape }}</span><br>
                 {% endfor %}
             {% endif %}
-        </p>
+            <input type="file" name="file" id="id_file" multiple required>
+        </div>
+
         {% csrf_token %}
         <input type="submit" value="Upload">
     </form>

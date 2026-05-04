@@ -7,7 +7,132 @@
     <h1>Blog settings</h1>
 
     <form method="post">
-        {{ form.as_p }}
+        {% if form.non_field_errors %}
+        <aside class="flash error">
+            <span class="text">{{ form.non_field_errors }}</span>
+        </aside>
+        {% endif %}
+
+        <div class="field">
+            <label for="id_username">{{ form.username.label }}
+                <span class="hint">{{ form.username.help_text }}</span></label>
+            {% if form.username.errors %}
+                {% for error in form.username.errors %}
+                    <span class="form-error">{{ error|escape }}</span><br>
+                {% endfor %}
+            {% endif %}
+            {{ form.username }}
+        </div>
+
+        <div class="field">
+            <label for="id_email">{{ form.email.label }}
+                <span class="hint">{{ form.email.help_text }}</span></label>
+            {% if form.email.errors %}
+                {% for error in form.email.errors %}
+                    <span class="form-error">{{ error|escape }}</span><br>
+                {% endfor %}
+            {% endif %}
+            {{ form.email }}
+        </div>
+
+        <div class="field">
+            <label for="id_blog_title">{{ form.blog_title.label }}</label>
+            {% if form.blog_title.errors %}
+                {% for error in form.blog_title.errors %}
+                    <span class="form-error">{{ error|escape }}</span><br>
+                {% endfor %}
+            {% endif %}
+            {{ form.blog_title }}
+        </div>
+
+        <div class="field">
+            <label for="id_blog_byline">{{ form.blog_byline.label }}
+                <span class="hint">{{ form.blog_byline.help_text }}</span></label>
+            {% if form.blog_byline.errors %}
+                {% for error in form.blog_byline.errors %}
+                    <span class="form-error">{{ error|escape }}</span><br>
+                {% endfor %}
+            {% endif %}
+            {{ form.blog_byline }}
+        </div>
+
+        <div class="field">
+            <label for="id_subscribe_note">{{ form.subscribe_note.label }}
+                <span class="hint">{{ form.subscribe_note.help_text }}</span></label>
+            {% if form.subscribe_note.errors %}
+                {% for error in form.subscribe_note.errors %}
+                    <span class="form-error">{{ error|escape }}</span><br>
+                {% endfor %}
+            {% endif %}
+            {{ form.subscribe_note }}
+        </div>
+
+        <div class="field">
+            <label for="id_footer_note">{{ form.footer_note.label }}
+                <span class="hint">{{ form.footer_note.help_text }}</span></label>
+            {% if form.footer_note.errors %}
+                {% for error in form.footer_note.errors %}
+                    <span class="form-error">{{ error|escape }}</span><br>
+                {% endfor %}
+            {% endif %}
+            {{ form.footer_note }}
+        </div>
+
+        <div class="field">
+            <label for="id_custom_domain">{{ form.custom_domain.label }}
+                <span class="hint">{{ form.custom_domain.help_text }}</span></label>
+            {% if form.custom_domain.errors %}
+                {% for error in form.custom_domain.errors %}
+                    <span class="form-error">{{ error|escape }}</span><br>
+                {% endfor %}
+            {% endif %}
+            {{ form.custom_domain }}
+        </div>
+
+        <div class="field">
+            <label for="id_notifications_on" style="display: inline-block; margin-top: 0;">{{ form.notifications_on.label }}
+                <span class="hint">{{ form.notifications_on.help_text }}</span></label>
+            {% if form.notifications_on.errors %}
+                {% for error in form.notifications_on.errors %}
+                    <span class="form-error">{{ error|escape }}</span><br>
+                {% endfor %}
+            {% endif %}
+            {{ form.notifications_on }}
+        </div>
+
+        <div class="field">
+            <label for="id_mail_export_on" style="display: inline-block; margin-top: 0;">{{ form.mail_export_on.label }}
+                <span class="hint">{{ form.mail_export_on.help_text }}</span></label>
+            {% if form.mail_export_on.errors %}
+                {% for error in form.mail_export_on.errors %}
+                    <span class="form-error">{{ error|escape }}</span><br>
+                {% endfor %}
+            {% endif %}
+            {{ form.mail_export_on }}
+        </div>
+
+        <div class="field">
+            <label for="id_markdown_link_paste_on" style="display: inline-block; margin-top: 0;">{{ form.markdown_link_paste_on.label }}
+                <span class="hint">{{ form.markdown_link_paste_on.help_text }}</span></label>
+            {% if form.markdown_link_paste_on.errors %}
+                {% for error in form.markdown_link_paste_on.errors %}
+                    <span class="form-error">{{ error|escape }}</span><br>
+                {% endfor %}
+            {% endif %}
+            {{ form.markdown_link_paste_on }}
+        </div>
+
+        <div class="field">
+            <label for="id_redirect_domain">{{ form.redirect_domain.label }}
+                <span class="hint">{{ form.redirect_domain.help_text }}</span></label>
+            {% if form.redirect_domain.errors %}
+                {% for error in form.redirect_domain.errors %}
+                    <span class="form-error">{{ error|escape }}</span><br>
+                {% endfor %}
+            {% endif %}
+            {{ form.redirect_domain }}
+        </div>
+
         {% csrf_token %}
         <input type="submit" value="Save">
     </form>

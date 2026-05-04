@@ -7,7 +7,22 @@
     <h1>Editing image</h1>
 
     <form method="post">
-        {{ form.as_p }}
+        {% if form.non_field_errors %}
+        <aside class="flash error">
+            <span class="text">{{ form.non_field_errors }}</span>
+        </aside>
+        {% endif %}
+
+        <div class="field">
+            <label for="id_name">{{ form.name.label }}</label>
+            {% if form.name.errors %}
+                {% for error in form.name.errors %}
+                    <span class="form-error">{{ error|escape }}</span><br>
+                {% endfor %}
+            {% endif %}
+            {{ form.name }}
+        </div>
+
         {% csrf_token %}
         <input type="submit" value="Save">
     </form>

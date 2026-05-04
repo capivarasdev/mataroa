@@ -11,7 +11,23 @@
     <h1>Unsubscribe from the email newsletter</h1>
 
     <form method="post">
-        {{ form.as_p }}
+        {% if form.non_field_errors %}
+        <aside class="flash error">
+            <span class="text">{{ form.non_field_errors }}</span>
+        </aside>
+        {% endif %}
+
+        <div class="field">
+            <label for="id_email">{{ form.email.label }}
+                <span class="hint">{{ form.email.help_text }}</span></label>
+            {% if form.email.errors %}
+                {% for error in form.email.errors %}
+                    <span class="form-error">{{ error|escape }}</span><br>
+                {% endfor %}
+            {% endif %}
+            {{ form.email }}
+        </div>
+
         {% csrf_token %}
         <input type="submit" value="Unsubscribe">
     </form>

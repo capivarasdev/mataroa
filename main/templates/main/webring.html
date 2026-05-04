@@ -25,7 +25,55 @@
 
     {% if request.user.is_authenticated %}
     <form method="post">
-        {{ form.as_p }}
+        {% if form.non_field_errors %}
+        <aside class="flash error">
+            <span class="text">{{ form.non_field_errors }}</span>
+        </aside>
+        {% endif %}
+
+        <div class="field">
+            <label for="id_webring_name">{{ form.webring_name.label }}</label>
+            {% if form.webring_name.errors %}
+                {% for error in form.webring_name.errors %}
+                    <span class="form-error">{{ error|escape }}</span><br>
+                {% endfor %}
+            {% endif %}
+            {{ form.webring_name }}
+        </div>
+
+        <div class="field">
+            <label for="id_webring_url">{{ form.webring_url.label }}
+                <span class="hint">{{ form.webring_url.help_text }}</span></label>
+            {% if form.webring_url.errors %}
+                {% for error in form.webring_url.errors %}
+                    <span class="form-error">{{ error|escape }}</span><br>
+                {% endfor %}
+            {% endif %}
+            {{ form.webring_url }}
+        </div>
+
+        <div class="field">
+            <label for="id_webring_prev_url">{{ form.webring_prev_url.label }}
+                <span class="hint">{{ form.webring_prev_url.help_text }}</span></label>
+            {% if form.webring_prev_url.errors %}
+                {% for error in form.webring_prev_url.errors %}
+                    <span class="form-error">{{ error|escape }}</span><br>
+                {% endfor %}
+            {% endif %}
+            {{ form.webring_prev_url }}
+        </div>
+
+        <div class="field">
+            <label for="id_webring_next_url">{{ form.webring_next_url.label }}
+                <span class="hint">{{ form.webring_next_url.help_text }}</span></label>
+            {% if form.webring_next_url.errors %}
+                {% for error in form.webring_next_url.errors %}
+                    <span class="form-error">{{ error|escape }}</span><br>
+                {% endfor %}
+            {% endif %}
+            {{ form.webring_next_url }}
+        </div>
+
         {% csrf_token %}
         <input type="submit" value="Save">
     </form>

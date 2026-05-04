@@ -5,13 +5,13 @@
 {% block content %}
 <main>
     <article>
-        <header>
+        <header class="article-header">
             <a class="images-item-back" href="{% url 'image_list' %}">« all images</a>
             <h1>{{ image.name }}</h1>
-            <p>
-            Uploaded on <time datetime="{{ image.uploaded_at|date:'Y-m-d' }}">{{ image.uploaded_at|date:'F d, Y' }}</time>
-            | <a href="{% url 'image_update' image.slug %}">Edit image</a>
-            | <a href="{% url 'image_delete' image.slug %}">Delete</a>
+            <p class="meta">
+                Uploaded on <time datetime="{{ image.uploaded_at|date:'Y-m-d' }}">{{ image.uploaded_at|date:'F d, Y' }}</time>
+                / <a href="{% url 'image_update' image.slug %}">Edit image</a>
+                / <a href="{% url 'image_delete' image.slug %}" class="danger">Delete</a>
             </p>
         </header>
     </article>
@@ -38,9 +38,9 @@
         {% endfor %}
     </ul>
     {% endif %}
-</main>
 
-<section class="images-item">
-    <img src="{% url 'image_raw' image.slug image.extension %}" alt="{{ image.name }}">
-</section>
+    <section class="images-item">
+        <img src="{% url 'image_raw' image.slug image.extension %}" alt="{{ image.name }}">
+    </section>
+</main>
 {% endblock %}

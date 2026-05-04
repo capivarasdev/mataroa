@@ -6,32 +6,41 @@
 <main>
     <h1>Images</h1>
     <form method="post" enctype="multipart/form-data">
-        {{ form.non_field_errors }}
-        <p>
-            <input type="file" name="file" id="id_file" multiple required>
+        {% if form.non_field_errors %}
+        <aside class="flash error">
+            <span class="text">{{ form.non_field_errors }}</span>
+        </aside>
+        {% endif %}
+
+        <div class="field">
+            <label for="id_file">Images
+                <span class="hint">jpeg, jpg, png, svg, gif, webp, tiff, tif, or bmp.</span></label>
             {% if form.file.errors %}
                 {% for error in form.file.errors %}
                     <span class="form-error">{{ error|escape }}</span><br>
                 {% endfor %}
             {% endif %}
-        </p>
+            <input type="file" name="file" id="id_file" multiple required>
+        </div>
+
         {% csrf_token %}
         <input type="submit" value="Upload">
     </form>
-</main>
 
-<section>
-    <p>
-        <strong>Using:</strong> {{ images|length }} out of 1000 images.
-        {{ total_quota }}MB out of 100MB.
+    <p class="meta">
+        {{ images|length }} / 1000 images · {{ total_quota }}MB / 100MB
     </p>
-</section>
 
-<section class="images-grid">
-    {% for image in images %}
-    <a href="{% url 'image_detail' image.slug %}" class="images-grid-item">
-        <img src="{% url 'image_raw' image.slug image.extension %}" alt="{{ image.name }}">
-    </a>
-    {% endfor %}
-</section>
+    {% if images %}
+    <section class="images-grid">
+        {% for image in images %}
+        <a href="{% url 'image_detail' image.slug %}" class="images-grid-item">
+            <img src="{% url 'image_raw' image.slug image.extension %}" alt="{{ image.name }}">
+        </a>
+        {% endfor %}
+    </section>
+    {% else %}
+    <p class="meta">No images yet - upload one above to get started.</p>
+    {% endif %}
+</main>
 {% endblock %}

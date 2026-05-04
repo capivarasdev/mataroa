@@ -1,18 +1,22 @@
-<hr>
+<hr class="soft">
 <footer>
+    {% if blog_user.footer_note %}
+        <div class="meta">
+        {{ blog_user.footer_note_as_html|safe }}
+        </div>
+    {% endif %}
+
+    <hr />
+
     <nav class="navigation">
+        <a class="brand" href="/">{{ blog_user.blog_title }}</a>
         <ul>
-            <li><a href="/">« {{ blog_user.blog_title }}</a></li>
-            <li><a href="{% url 'rss_feed' %}">RSS</a> / <a href="{% url 'atom_feed' %}">Atom</a></li>
+            <li><a href="{% url 'rss_feed' %}">RSS</a></li>
+            <li><a href="{% url 'atom_feed' %}">Atom</a></li>
             {% if blog_user.notifications_on %}
             <li><a href="{% url 'notification_subscribe' %}">Newsletter</a></li>
             {% endif %}
         </ul>
     </nav>
 
-    <p>
-        {% if blog_user.footer_note %}
-            {{ blog_user.footer_note_as_html|safe }}
-        {% endif %}
-    </p>
 </footer>

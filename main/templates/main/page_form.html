@@ -14,9 +14,13 @@
         {% endif %}
     </h1>
     <form method="post">
-        {{ form.non_field_errors }}
+        {% if form.non_field_errors %}
+        <aside class="flash error">
+            <span class="text">{{ form.non_field_errors }}</span>
+        </aside>
+        {% endif %}
 
-        <p>
+        <div class="field">
             <label for="id_title">Title</label>
             {% if form.title.errors %}
                 {% for error in form.title.errors %}
@@ -24,24 +28,25 @@
                 {% endfor %}
             {% endif %}
             <input type="text" name="title" id="id_title" maxlength="300" required value="{{ form.title.value|default_if_none:'' }}">
-        </p>
+        </div>
 
-        <p>
-            <label for="id_slug">Slug</label>
+        <div class="field">
+            <label for="id_slug">Slug
+                <span class="hint">{{ form.slug.help_text }}</span></label>
             {% if form.slug.errors %}
                 {% for error in form.slug.errors %}
                     <span class="form-error">{{ error|escape }}</span><br>
                 {% endfor %}
             {% endif %}
-            <input type="text" name="slug" id="id_slug" maxlength="300" required value="{{ form.slug.value|default_if_none:'' }}">
-            <span class="helptext">{{ form.slug.help_text }}</span>
-        </p>
 
-        <p>
-            <label for="id_is_hidden" style="display: inline-block; margin-top: 0;">Hidden?</label>
+            <input type="text" name="slug" id="id_slug" maxlength="300" required value="{{ form.slug.value|default_if_none:'' }}">
+        </div>
+
+        <div class="field">
+            <label for="id_is_hidden" style="display: inline-block; margin-top: 0;">Hidden?
+                <span class="hint">{{ form.is_hidden.help_text }}</span></label>
             <input type="checkbox" name="is_hidden" id="id_is_hidden" {% if form.is_hidden.value %}checked{% endif %}>
-            <br><span class="helptext">{{ form.is_hidden.help_text }}</span>
-        </p>
+        </div>
 
         <p>
             <label for="id_body">Content (<a href="{% url 'guides_markdown' %}">supports markdown</a>) <span id="js-status"></span></label>

@@ -11,52 +11,55 @@
     <h1>Sign up to start your blog</h1>
 
     <form method="post">
-        {{ form.non_field_errors }}
+        {% if form.non_field_errors %}
+        <aside class="flash error">
+            <span class="text">{{ form.non_field_errors }}</span>
+        </aside>
+        {% endif %}
 
-        <p>
-            <label for="id_username">{{ form.username.label }}</label>
+        <div class="field">
+            <label for="id_username">{{ form.username.label }}
+                <span class="hint">{{ form.username.help_text }}</span></label>
             {% if form.username.errors %}
                 {% for error in form.username.errors %}
                     <span class="form-error">{{ error|escape }}</span><br>
                 {% endfor %}
             {% endif %}
             {{ form.username }}
-            <span class="helptext">{{ form.username.help_text }}</span>
-        </p>
+        </div>
 
-        <p>
-            <label for="id_email">{{ form.email.label }}</label>
+        <div class="field">
+            <label for="id_email">{{ form.email.label }}
+                <span class="hint">{{ form.email.help_text }}</span></label>
             {% if form.email.errors %}
                 {% for error in form.email.errors %}
                     <span class="form-error">{{ error|escape }}</span><br>
                 {% endfor %}
             {% endif %}
             {{ form.email }}
-            <span class="helptext">{{ form.email.help_text }}</span>
-        </p>
+        </div>
 
-        <p>
-            <label for="id_password1">{{ form.password1.label }}</label>
+        <div class="field">
+            <label for="id_password1">{{ form.password1.label }}
+                <span class="hint">{{ form.password1.help_text }}</span></label>
             {% if form.password1.errors %}
                 {% for error in form.password1.errors %}
                     <span class="form-error">{{ error|escape }}</span><br>
                 {% endfor %}
             {% endif %}
             {{ form.password1 }}
-        </p>
-        {# this goes outside p element because it contains a ul element #}
-        <span class="helptext">{{ form.password1.help_text }}</span>
+        </div>
 
-        <p>
-            <label for="id_password2">{{ form.password2.label }}</label>
+        <div class="field">
+            <label for="id_password2">{{ form.password2.label }}
+                <span class="hint">{{ form.password2.help_text }}</span></label>
             {% if form.password2.errors %}
                 {% for error in form.password2.errors %}
                     <span class="form-error">{{ error|escape }}</span><br>
                 {% endfor %}
             {% endif %}
             {{ form.password2 }}
-            <span class="helptext">{{ form.password2.help_text }}</span>
-        </p>
+        </div>
 
         {% csrf_token %}
 

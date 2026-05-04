@@ -55,7 +55,7 @@ button {
                     {% endif %}
                     </a>
                 </td>
-                <td>
+                <td id="actions-{{ user.id }}">
                     [
                         {% if not user.is_approved %}
                         <span onclick="approveUser('{{ user.id }}')" style="color: green; cursor: pointer;">approve</span>
