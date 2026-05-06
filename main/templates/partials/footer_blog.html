@@ -1,6 +1,7 @@
-<hr class="soft">
 <footer>
     {% if blog_user.footer_note %}
+        <hr class="soft">
+
         <div class="meta">
         {{ blog_user.footer_note_as_html|safe }}
         </div>
