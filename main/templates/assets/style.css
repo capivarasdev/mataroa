@@ -496,6 +496,10 @@ button:hover, .btn:hover, input[type="submit"]:hover {
   height: auto;
 }
 
+img {
+  max-width: 100%;
+}
+
 /* article body images (rendered from markdown, no class) */
 article img {
   max-width: 70%;
