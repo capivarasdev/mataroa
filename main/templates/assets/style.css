@@ -724,6 +724,56 @@ svg .analytics-chart-text {
     font-size: 10px;
 }
 
+/* admonitions / alerts (GitHub-style) */
+.alert {
+  font-family: var(--font-body);
+  font-size: var(--t-sm);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid;
+  border-left-width: 4px;
+  border-radius: 3px;
+  margin: var(--space-4) 0;
+  line-height: 1.5;
+}
+.alert > p:first-child {
+  font-weight: 600;
+  margin-top: 0;
+}
+.alert > p:last-child {
+  margin-bottom: 0;
+}
+.alert a {
+  color: inherit;
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+.alert.alert-note {
+  color:        light-dark(oklch(36% 0.13 235), oklch(90% 0.12 235));
+  background:   light-dark(oklch(94% 0.06 235), oklch(26% 0.07 235));
+  border-color: light-dark(oklch(58% 0.17 235), oklch(62% 0.17 235));
+}
+.alert.alert-tip {
+  color:        light-dark(oklch(34% 0.10 150), oklch(90% 0.13 150));
+  background:   light-dark(oklch(94% 0.07 150), oklch(26% 0.06 150));
+  border-color: light-dark(oklch(60% 0.16 150), oklch(60% 0.16 150));
+}
+.alert.alert-important {
+  color:        light-dark(oklch(38% 0.16 25),  oklch(90% 0.12 25));
+  background:   light-dark(oklch(93% 0.07 25),  oklch(28% 0.08 25));
+  border-color: light-dark(oklch(58% 0.20 25),  oklch(62% 0.20 25));
+}
+.alert.alert-warning {
+  color:        light-dark(oklch(38% 0.12 75),  oklch(90% 0.12 85));
+  background:   light-dark(oklch(94% 0.10 85),  oklch(28% 0.07 85));
+  border-color: light-dark(oklch(65% 0.18 75),  oklch(65% 0.18 75));
+}
+.alert.alert-caution {
+  color:        light-dark(oklch(38% 0.16 25),  oklch(90% 0.12 25));
+  background:   light-dark(oklch(93% 0.07 25),  oklch(28% 0.08 25));
+  border-color: light-dark(oklch(58% 0.20 25),  oklch(62% 0.20 25));
+}
+
 /* footnotes */
 .footnotes {
   margin-top: var(--space-7);
