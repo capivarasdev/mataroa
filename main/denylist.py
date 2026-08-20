@@ -56,6 +56,7 @@ DISALLOWED_USERNAMES = [
     "signin",
     "signup",
     "smtp",
+    "src",
     "static",
     "status",
     "support",
